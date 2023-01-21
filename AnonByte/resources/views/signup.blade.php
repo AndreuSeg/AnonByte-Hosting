@@ -26,7 +26,7 @@
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="password">Password</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded text-center" type="password" name="password" required>
+                <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="password" name="password" required>
             </div>
             <button class="sign-up-button text-center p-3 rounded" type="submit">Registrarse</button>
         </form>

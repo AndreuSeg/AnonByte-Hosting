@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -23,6 +21,11 @@ class LoginController extends Controller
         $remember = $request->has('remember');
         // Con el metodo attempt nos logeamos, y con el segundo parametro boleano comprovamos si se queda recordada la sesion o no
         if (Auth::attempt($input, $remember) && (Auth::user()->role_id == 1)) {
+            // Verificamos si el usuario esta verificado
+            if (Auth::user()->email_verified_at == null) {
+                return abort(403);
+            }
+
             return redirect()->route('dashboard-home');
         } else {
             // Si las credencailes son invalidas devolvemos un mensaje de error

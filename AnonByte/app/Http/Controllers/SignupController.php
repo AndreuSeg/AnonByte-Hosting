@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerifyMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use SebastianBergmann\Type\NullType;
@@ -9,6 +10,7 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class SignupController extends Controller
 {
@@ -52,6 +54,11 @@ class SignupController extends Controller
             'updated_at' => Carbon::now(),
             'deleted_At' => null,
         ]);
+
+        $id = User::select('id')->where('email', $email)->get();
+        $id = $id[0];
+
+        Mail::to($email)->send(new VerifyMail($id));
 
         return redirect()->route('login');
     }
