@@ -1,4 +1,4 @@
 /*.txt
-/pihole/docker-compose.yml
-/pihole/etc-pihole
-/pihole/etc-dnsmasq.d
+/pi-hole/docker-compose.yml
+/pi-hole/etc-pihole
+/pi-hole/etc-dnsmasq.d
