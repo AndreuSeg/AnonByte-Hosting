@@ -1,0 +1,30 @@
+.menu_horitzontal {
+    background-color: #5555;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+}
+
+.search {
+    margin-left: 15rem;
+}
+
+.menu_horitzontal .menu_user {
+    display: flex;
+    margin-right: 6%;
+    gap: 20px;
+}
+
+.menu_vertical {
+    background-color: #5555;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.menu_vertical h3 {
+
+}

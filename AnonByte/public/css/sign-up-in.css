@@ -1,0 +1,52 @@
+.sign-up, .log-in {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign-up .sign-up-form, .log-in .log-in-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.sign-up .sign-up-form .fullname {
+    display: flex;
+}
+
+.sign-up .sign-up-form .textbox, .log-in .log-in-form .textbox {
+    display: flex;
+    flex-direction: column;
+}
+
+.sign-up .sign-up-form .textbox label, .log-in .log-in-form .textbox label {
+    zoom: 120%;
+}
+
+.sign-up .sign-up-form .textbox input, .log-in .log-in-form .textbox input {
+    zoom: 120%;
+    background-color: var(--light_blue);
+    border: none;
+    outline: none;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.sign-up .sign-up-form .textbox input:focus, .log-in .log-in-form .textbox input:focus{
+    opacity: 85%;
+    box-shadow: 0 0 0.5rem var(--blue);
+    border: none;
+}
+
+.sign-up .sign-up-form button, .log-in .log-in-form button{
+    background-color: var(--buttons);
+    cursor: pointer;
+    border: none;
+}
+
+.sign-up .sign-up-form button:hover, .log-in .log-in-form button:hover {
+    opacity: 80%;
+}
+
+.sign-up p a, .log-in p a {
+    color: var(--buttons);
+}
