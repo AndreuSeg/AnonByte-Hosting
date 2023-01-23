@@ -50,3 +50,16 @@
 .sign-up p a, .log-in p a {
     color: var(--buttons);
 }
+
+.eyeclosed {
+    position: relative;
+    left: 95%;
+    bottom: 32px;
+}
+
+.eye {
+    position: relative;
+    left: 95%;
+    bottom: 32px;
+    display: none;
+}

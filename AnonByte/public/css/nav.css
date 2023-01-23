@@ -13,3 +13,13 @@
     list-style: none;
 	display: flex;
 }
+
+.home_nav .menu-horizontal li a {
+    display: block;
+    text-decoration: none;
+}
+
+.home_nav .menu-horizontal a:hover {
+    text-decoration: underline;
+    opacity: 80%;
+}
