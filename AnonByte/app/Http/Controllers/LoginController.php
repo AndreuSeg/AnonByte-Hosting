@@ -23,13 +23,13 @@ class LoginController extends Controller
         if (Auth::attempt($input, $remember) && (Auth::user()->role_id == 1)) {
             // Verificamos si el usuario esta verificado
             if (Auth::user()->email_verified_at == null) {
-                return abort(403);
+                return view('usernotverified');
             }
 
             return redirect()->route('dashboard-home');
         } else {
             // Si las credencailes son invalidas devolvemos un mensaje de error
-            return redirect()->back()->withErrors(['password' => 'La contraseña es incorrecta']);
+            return redirect()->back()->withErrors(['credentials' => 'Las credenciales son incorrectas']);
         }
     }
 

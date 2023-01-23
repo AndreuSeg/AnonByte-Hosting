@@ -13,8 +13,11 @@
         </form>
     </div>
     <div class="tabla">
+        @if (session('message'))
+            <p class="bg-slate-500 mt-2">{{ session('message') }}</p>
+        @endif
         <table
-            class="users-table border-solid border-slate-500 border-2 table-auto mt-5
+            class="users-table border-solid border-slate-500 border-2 table-auto mt-2
     border-spacing-5 border-collapse shadow-slate-600 shadow-2xl w-5/12">
             <thead class="bg-gray-400">
                 <tr>
@@ -22,7 +25,7 @@
                     <th class="bg-slate-500 p-2 text-left font-bold">Lastname</th>
                     <th class="bg-slate-500 p-2 text-left font-bold">Username</th>
                     <th class="bg-slate-500 p-2 text-left font-bold">Email</th>
-                    <th class="bg-slate-500 p-2 text-left font-bold">Role_id</th>
+                    <th class="bg-slate-500 p-2 text-left font-bold">Role id</th>
                     <th class="bg-slate-500 p-2 text-left font-bold"></th>
                 </tr>
             </thead>

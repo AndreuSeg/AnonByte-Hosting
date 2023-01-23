@@ -26,7 +26,7 @@ class AdminController extends Controller
             return redirect()->route('admin.users.users-table');
         } else {
             // Si las credencailes son invalidas devolvemos un mensaje de error
-            return redirect()->back()->withErrors(['password' => 'La contraseña es incorrecta']);
+            return redirect()->back()->withErrors(['credentials' => 'Las credenciales son incorrectas']);
         }
     }
 
@@ -64,7 +64,7 @@ class AdminController extends Controller
         $user = User::where('id', $id)->firstOrFail();
         // Lo borramos
         $user->delete();
-        return redirect()->route('admin.users.users-table');
+        return redirect()->route('admin.users.users-table')->with('message', 'Usuario eliminado correctamte');
     }
 
     public function saveUser(Request $request, $id)
@@ -79,14 +79,14 @@ class AdminController extends Controller
         // Guardamos los cambios
         $user->save();
 
-        return redirect()->route('admin.users.users-table');
+        return redirect()->route('admin.users.users-table')->with('message', 'Usuario modificado correctamente');
     }
 
     // Funcion privada para filtrar segun nombre
     private function _filter($name)
     {
         // Paginamos y filtramos por nombre
-        $data = User::where('name', 'like', $name . '%')->paginate(10);
+        $data = User::where('name', 'like', $name . '%')->paginate(15);
         return $data;
     }
 }
