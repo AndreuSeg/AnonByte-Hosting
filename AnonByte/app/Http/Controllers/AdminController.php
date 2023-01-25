@@ -33,18 +33,13 @@ class AdminController extends Controller
     public function viewTable(Request $request)
     {
         // Recuperamos los usuarios, y si se ha filtrado por nombre enseñarlos filtrados
-        $name = $request->input('name');
+        $users = $request->input('users');
         // Llamamos a la funcion privada para filtrar
-        $users = $this->_filter($name);
+        $users = $this->_filter($users);
 
         return view('admin.home', [
             'users' => $users,
         ]);
-    }
-
-    public function createUser()
-    {
-        return view('admin.home');
     }
 
     public function editUser($id)
@@ -83,10 +78,11 @@ class AdminController extends Controller
     }
 
     // Funcion privada para filtrar segun nombre
-    private function _filter($name)
+    private function _filter($users)
     {
-        // Paginamos y filtramos por nombre
-        $data = User::where('name', 'like', $name . '%')->paginate(15);
+        // Paginamos y filtramos por o email
+        $data = User::where('name', 'like', $users . '%')->orWhere('email', 'like', $users . '%')->paginate(12);
+        $data->appends(['users' => $users]);
         return $data;
     }
 }

@@ -3,7 +3,7 @@
 
 @section('main')
     <div class="log-in mt-40 w-full">
-        <h1>Log In</h1>
+        <h1 class="text-4xl">Log In</h1>
         <form class="log-in-form gap-3 p-4" method="POST" action="{{ route('login') }}">
             @csrf
             <div class="textbox">

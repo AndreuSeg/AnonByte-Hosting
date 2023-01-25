@@ -2,10 +2,14 @@
 @section('tittle', 'Admin')
 
 @section('main')
-    <div class="filtros gap-4">
+    <form class="flex flex-col items-center" action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit">Cerrar sesión</button>
+    </form>
+    <div class="filtros gap-4 mt-4">
         <form action="">
             @csrf
-            <input class="rounded p-2 w-40 bg-slate-300" type="text" name="name" placeholder="Filtrar por nombre">
+            <input class="rounded p-2 w-60 bg-slate-300" type="text" name="users" placeholder="Filtrar por nombre o email">
         </form>
         <form action="{{ route('admin.users.users-table') }}">
             @csrf

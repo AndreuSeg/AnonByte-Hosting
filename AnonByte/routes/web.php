@@ -47,7 +47,6 @@ Route::middleware(['admin'])->group(function() {
 
         Route::prefix('/users')->name('users.')->group(function() {
             Route::get('/', [AdminController::class, 'viewTable'])->name('users-table');
-            Route::get('/create', [AdminController::class, 'createUser'])->name('create-user');
             Route::get('/edit/{id}', [AdminController::class, 'editUser'])->name('edit-user');
             Route::delete('/{id}', [AdminController::class, 'deleteUser'])->name('delete-user');
             Route::match(['POST', 'PUT', 'PATCH'],'/{id?}', [AdminController::class, 'saveUser'])->name('save-user');

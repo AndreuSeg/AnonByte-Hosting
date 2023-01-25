@@ -28,7 +28,15 @@ class SignupController extends Controller
          * @param  \Illuminate\Http\Request  $request
          * @return \Illuminate\Http\Response
          */
-        // Recuperamos los datos pasados por el formulario
+        // Recuperamos los datos pasados por el formulario, y los validamos.
+        $request->validate([
+            'username' => 'required',
+            'name' => 'required|string',
+            'lastname' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
         $username = $request->input('username');
         $name = $request->input('name');
         $lastname = $request->input('lastname');

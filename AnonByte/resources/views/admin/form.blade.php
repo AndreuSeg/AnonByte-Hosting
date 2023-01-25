@@ -1,5 +1,5 @@
 @extends('admin.generals.head')
-@section('tittle', 'User-Update')
+@section('tittle', 'Editar usuario {{ $user->name }}')
 
 @section('main')
     <div class="padre mt-40 w-full">
