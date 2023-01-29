@@ -30,11 +30,11 @@ class SignupController extends Controller
          */
         // Recuperamos los datos pasados por el formulario, y los validamos.
         $request->validate([
-            'username' => 'required',
-            'name' => 'required|string',
-            'lastname' => 'required|string',
-            'email' => 'required|email',
-            'password' => 'required|min:8',
+            'username' => 'required|max:50',
+            'name' => 'required|string|max:30',
+            'lastname' => 'required|string|max:30',
+            'email' => 'required|email|max:255',
+            'password' => ['required','min:8', 'string', 'regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/'],
         ]);
 
         $username = $request->input('username');
@@ -48,7 +48,7 @@ class SignupController extends Controller
         $role = Role::find(1);
         $roleId = $role->id;
 
-        // Con el modelo de user registramos al usuario en la base de datos
+        // Con el modelo de user registramos al us usuario en la base de datos
         $store = User::create([
             'role_id' => $roleId,
             'username' => $username,

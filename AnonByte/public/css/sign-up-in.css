@@ -51,15 +51,32 @@
     color: var(--buttons);
 }
 
+.sign-up .sign-up-form .textbox input::placeholder, .log-in .log-in-form .textbox input::placeholder {
+    color: white;
+}
+
 .eyeclosed {
     position: relative;
-    left: 95%;
-    bottom: 32px;
+    left: 96.5%;
+    bottom: 35px;
 }
 
 .eye {
     position: relative;
-    left: 95%;
-    bottom: 32px;
+    left: 96.5%;
+    bottom: 35px;
+    display: none;
+}
+
+.eyeclosed2 {
+    position: relative;
+    left: 93%;
+    bottom: 34px;
+}
+
+.eye2 {
+    position: relative;
+    left: 93%;
+    bottom: 34px;
     display: none;
 }

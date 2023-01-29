@@ -1,30 +1,103 @@
-.menu_horitzontal {
-    background-color: #5555;
+.padre {
+    display: grid;
+    width: 96%;
+    background-color: var(--bg);
+    grid-template-columns: 14rem auto 23rem;
+}
+
+/* START ASIDE */
+
+aside {
+    height: 100vh;
+}
+
+aside .top {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 50px;
 }
 
-.search {
-    margin-left: 15rem;
-}
-
-.menu_horitzontal .menu_user {
+aside .top .logo {
     display: flex;
-    margin-right: 6%;
-    gap: 20px;
+    align-items: center;
 }
 
-.menu_vertical {
-    background-color: #5555;
-    position: absolute;
-    top: 0;
+aside .close {
+    display: none;
+}
+
+/* SIDEBAR */
+
+aside .sidebar {
+    height: 86vh;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    position: relative;
+    top: 3rem;
 }
 
-.menu_vertical h3 {
+aside .sidebar h3 {
+    font-weight: 500;
+}
 
+aside .sidebar a {
+    color: rgb(30, 30, 30);
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
+    gap: 1rem;
+    position: relative;
+    height: 3.7rem;
+}
+
+aside .sidebar a.active {
+    background-color: white;
+    color: var(--light_blue);
+    margin-left: 0;
+}
+
+aside .sidebar a.active::before {
+    content: '';
+    width: 6px;
+    height: 100%;
+    background-color: var(--light_blue);
+}
+
+aside .sidebar a:hover {
+    color: var(--light_blue);
+}
+
+aside form {
+    display: flex;
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+}
+
+aside form h3 {
+    font-weight: 500;
+}
+
+aside form:hover {
+    color: var(--light_blue);
+}
+
+/* END ASIDE */
+
+main {
+    margin-top: 2rem;
+}
+
+.pruebapadre {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.prueba {
+    width: 200px;
+    height: 200px;
+    background-color: bisque;
+    margin: 2rem;
+    padding: 2rem;
 }

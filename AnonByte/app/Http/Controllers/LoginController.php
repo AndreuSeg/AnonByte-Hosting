@@ -29,7 +29,7 @@ class LoginController extends Controller
             return redirect()->route('dashboard-home');
         } else {
             // Si las credencailes son invalidas devolvemos un mensaje de error
-            return redirect()->back()->withErrors(['credentials' => 'Las credenciales son incorrectas']);
+            return redirect()->back()->withErrors(['Credentials' => 'Tus credenciales son incorrectas']);
         }
     }
 

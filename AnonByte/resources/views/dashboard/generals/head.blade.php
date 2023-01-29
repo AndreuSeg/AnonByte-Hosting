@@ -17,15 +17,17 @@
 </head>
 
 <body>
-    <header>
-        @section('header')
-            @include('dashboard.generals.navbar')
-            @include('dashboard.generals.navbar-side')
-        @show
-    </header>
-    <main>
-        @yield('main')
-    </main>
+    <div class="padre mt-0 mb-0 ml-8 mr-8 gap-7">
+        <aside class="bg-slate-200">
+            @section('aside')
+                @include('dashboard.generals.aside')
+            @show
+        </aside>
+        {{-- END ASIDE --}}
+        <main>
+            @yield('main')
+        </main>
+    </div>
     {{-- Bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">

@@ -8,28 +8,28 @@
             @csrf
             <div class="textbox">
                 <label class="mt-2 ml-2" for="username">Username</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="username" required>
+                <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="username" placeholder="Nombre de usuario" required>
             </div>
             <div class="fullname gap-3">
                 <div class="textbox">
                     <label class="mt-2 ml-2" for="name">Name</label>
-                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="name" required>
+                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="name" placeholder="Nombre" required>
                 </div>
                 <div class="textbox">
                     <label class="mt-2 ml-2" for="lastname">Last Name</label>
-                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="lastname" required>
+                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="lastname" placeholder="Apellidos" required>
                 </div>
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="email">Email</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="email" name="email" required>
+                <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="email" name="email" placeholder="Email" required>
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="password">Password</label>
-                <input id="pass" class="pt-2 pb-2 pl-4 pr-4 rounded" type="password" name="password" required>
+                <input id="pass" class="pt-2 pb-2 pl-4 pr-4 rounded" type="password" name="password" placeholder="Contraseña" required>
                 <span>
-                    <svg onclick="password()" class="eyeclosed" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                        class="bi bi-eye-slash" viewBox="0 0 16 16">
+                    <svg onclick="password()" class="eyeclosed" xmlns="http://www.w3.org/2000/svg" width="20"
+                        height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                         <path
                             d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
                         <path
@@ -46,9 +46,21 @@
                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                     </svg>
                 </span>
+                @if ($errors->any())
+                    <div class="bg-slate-600 m-2 p-2">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <button class="sign-up-button text-center p-3 rounded" type="submit">Registrarse</button>
         </form>
-        <p class="text-center mt-4">¿Estas registrado ya?<a class="no-underline" href="{{ route('form-login') }}"><br><b>Accede a
-                    tu cuenta</b></a></p>
+        <p class="text-center mt-4">¿Estas registrado ya?
+            <a class="no-underline" href="{{ route('form-login') }}"><br>
+                <b>Accede a tu cuenta</b>
+            </a>
+        </p>
     </div>
 @endsection

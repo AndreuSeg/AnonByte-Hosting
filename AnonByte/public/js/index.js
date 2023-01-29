@@ -15,3 +15,21 @@ function password() {
         eye.style.display = 'none'
     }
 }
+
+var input2 = document.querySelector('#pass2')
+
+var eye2 = document.querySelector('.eye2')
+var eyeclosed2 = document.querySelector('.eyeclosed2')
+
+function password2() {
+    if (input2.type === 'password') {
+        input2.type = 'text'
+        eyeclosed2.style.display = 'none'
+        eye2.style.display = 'block'
+    }
+    else {
+        input2.type = 'password'
+        eyeclosed2.style.display = 'block'
+        eye2.style.display = 'none'
+    }
+}
