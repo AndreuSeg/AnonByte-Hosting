@@ -1,4 +1,9 @@
 /*.txt
-/pi-hole/docker-compose.yml
-/pi-hole/etc-pihole
-/pi-hole/etc-dnsmasq.d
+/services/pi-hole/docker-compose.yml
+/services/pi-hole/etc-pihole
+/services/pi-hole/etc-dnsmasq.d
+/services/nginx/ssl
+/services/mysql/Mysql
+/services/mysql/.env
+/services/vsftpd/logs
+/services/vsftpd/.env

@@ -66,26 +66,39 @@ server {
 }
 ```
 
-Archivo: AnonByte.com. Es un host virutal con Reverse Proxy.
+Archivo: sites-avaliable/AnonByte.com. Es un host virutal para Laravel.
 
 ```bash
 server {
     listen 80;
-
+    listen [::]:80;
+    server_name anonbyte.es;
+    root /var/www/anonbyte.es/public;
+ 
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+ 
+    index index.php;
+ 
+    charset utf-8;
+ 
     location / {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
+        try_files $uri $uri/ /index.php?$query_string;
     }
-
+ 
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+ 
+    error_page 404 /index.php;
+ 
     location ~ \.php$ {
-        include fastcgi_params;
         fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+ 
+    location ~ /\.(?!well-known).* {
+        deny all;
     }
 }
 ```
