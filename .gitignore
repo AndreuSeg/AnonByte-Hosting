@@ -2,8 +2,9 @@
 /services/pi-hole/docker-compose.yml
 /services/pi-hole/etc-pihole
 /services/pi-hole/etc-dnsmasq.d
-/services/nginx/ssl
-/services/mysql/Mysql
-/services/mysql/.env
+/services/traefik/docker/nginx/logs
+/services/traefik/ssl
+/services/traefik/mysql/mysql-anonbyte
+/services/traefik/mysql/.env
 /services/vsftpd/logs
 /services/vsftpd/.env
