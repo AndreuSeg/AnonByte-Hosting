@@ -16,7 +16,7 @@ services:
     volumes:
       - "./Mysql:/var/lib/mysql"
     networks:
-      Database:
+      AnonByte:
         ipv4_address: 10.0.0.5
 
   # PhPMyAdmin
@@ -27,12 +27,9 @@ services:
     environment:
         PMA_ARBITRARY: 1
     networks:
-      Database:
-        ipv4_address: 10.0.0.10
+      AnonByte:
+        ipv4_address: 10.0.0.6
 
 networks:
-  Database:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.0.0.0/24
+  AnonByte:
+    external: true

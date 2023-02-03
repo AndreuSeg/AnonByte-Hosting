@@ -5,8 +5,8 @@ volumes:
     grafana_data: {}
 
 networks:
-  front-tier:
-  back-tier:
+  AnonByte:
+    external: true
 
 services:
   prometheus:
@@ -26,7 +26,8 @@ services:
       - ping:ping
       - speedtest:speedtest
     networks:
-      - back-tier
+      AnonByte:
+        ipv4_address: 10.0.0.10
 
   grafana:
     image: grafana/grafana
@@ -41,8 +42,8 @@ services:
     env_file:
       - ./grafana/config.monitoring
     networks:
-      - back-tier
-      - front-tier
+      AnonByte:
+        ipv4_address: 10.0.0.11
 
   ping:
     tty: true
@@ -58,7 +59,8 @@ services:
     command:
       - '--config.file=/config/blackbox.yml'
     networks:
-      - back-tier
+      AnonByte:
+        ipv4_address: 10.0.0.12
 
   speedtest:
     tty: true
@@ -70,7 +72,8 @@ services:
     image: miguelndecarvalho/speedtest-exporter
     restart: always
     networks:
-      - back-tier
+      AnonByte:
+        ipv4_address: 10.0.0.13
 
   nodeexp:
     privileged: true
@@ -88,4 +91,5 @@ services:
       - --collector.filesystem.ignored-mount-points
       - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
     networks:
-      - back-tier
+      AnonByte:
+        ipv4_address: 10.0.0.14

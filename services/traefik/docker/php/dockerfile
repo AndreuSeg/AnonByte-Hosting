@@ -1,0 +1,11 @@
+FROM bitnami/laravel:latest
+
+RUN apt-get update -y
+
+RUN apt-get install nodejs -y && apt-get install npm -y
+
+RUN npm install -g tailwindcss postcss-cli autoprefixer
+
+WORKDIR /app
+
+RUN npx tailwindcss init -p
