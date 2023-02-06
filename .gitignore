@@ -3,7 +3,7 @@
 # Pi-Hole
 server2/services/pi-hole/etc-pihole
 server2/services/pi-hole/etc-dnsmasq.d
-server2/services/pi-hole/.env
+server2/services/pi-hole/docker-compose.yml
 
 # Logs Nginx
 server2/services/traefik/docker/nginx/logs
