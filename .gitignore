@@ -1,5 +1,3 @@
-/*.txt
-
 # Pi-Hole
 server2/services/pi-hole/etc-pihole
 server2/services/pi-hole/etc-dnsmasq.d
