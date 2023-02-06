@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  vsftpd:
+    image: fauria/vsftpd
+    environment:
+        FTP_USER: Prueba
+        FTP_PASS: Prueba
+    ports:
+        - "20:20"
+        - "21:21"
+    volumes:
+        - "./logs:/var/log/vsftpd"

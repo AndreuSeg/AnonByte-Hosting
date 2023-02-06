@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+
+:root {
+	--blue: rgba(19,107,235, 1);
+	--light_blue: rgba(96, 164, 235, 1);
+    --buttons: #BE81F7;
+    --bg: #80BFF7;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-color: var(--bg);
+    overflow-x: hidden;
+}

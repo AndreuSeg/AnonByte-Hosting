@@ -1,0 +1,71 @@
+td:empty {
+    background-color: #ffcccc;
+}
+
+.log-in-admin, .padre {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.log-in-form, .user-edit {
+    display: flex;
+    flex-direction: column;
+}
+
+.log-in-admin .log-in-form .textbox, .padre .user-edit .textbox {
+    display: flex;
+    flex-direction: column;
+}
+
+.log-in-admin .log-in-form .textbox label, .padre .user-edit .textbox label {
+    zoom: 120%;
+}
+
+.log-in-admin .log-in-form .textbox input, .padre .user-edit .textbox input {
+    zoom: 120%;
+    background-color: var(--light_blue);
+    border: none;
+    outline: none;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.log-in-admin .log-in-form .textbox input:focus, .padre .user-edit .textbox input:focus {
+    opacity: 85%;
+    box-shadow: 0 0 0.5rem var(--blue);
+    border: none;
+}
+
+.log-in-admin .log-in-form button {
+    background-color: var(--buttons);
+    cursor: pointer;
+    border: none;
+}
+
+.filtros {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filtros .borrar-filtros-button {
+    background-color: var(--buttons);
+
+}
+
+.tabla {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.padre .user-edit .save-button {
+    background-color: var(--buttons);
+    cursor: pointer;
+    border: none;
+}
+
+.save:hover {
+    opacity: 80%;
+}

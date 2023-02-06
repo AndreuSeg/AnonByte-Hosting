@@ -1,0 +1,25 @@
+.home_nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.home_nav .logo {
+    display: flex;
+    align-items: center;
+}
+
+.home_nav .menu-horizontal {
+    list-style: none;
+	display: flex;
+}
+
+.home_nav .menu-horizontal li a {
+    display: block;
+    text-decoration: none;
+}
+
+.home_nav .menu-horizontal a:hover {
+    text-decoration: underline;
+    opacity: 80%;
+}
