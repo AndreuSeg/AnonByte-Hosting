@@ -51,7 +51,6 @@ td:empty {
 
 .filtros .borrar-filtros-button {
     background-color: var(--buttons);
-
 }
 
 .tabla {
@@ -68,4 +67,8 @@ td:empty {
 
 .save:hover {
     opacity: 80%;
+}
+
+button.volver {
+    background-color: var(--buttons);
 }

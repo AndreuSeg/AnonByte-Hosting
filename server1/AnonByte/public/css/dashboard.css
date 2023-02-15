@@ -101,3 +101,49 @@ main {
     margin: 2rem;
     padding: 2rem;
 }
+
+/* CREAR STACK */
+
+.explicacion {
+    display: flex;
+    flex-direction: column;
+}
+
+.explicacion .consejos {
+    display: flex;
+    flex-direction: column;
+}
+
+.explicacion .consejos .consejo {
+    display: flex;
+    flex-direction: column;
+}
+
+.explicacion .consejos .consejo h3 ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.explicacion .consejos .consejo h3 ul li {
+    list-style: disc;
+}
+
+/* FOOTER */
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 50px;
+    background-color: rgb(44, 40, 40);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.over {
+    overflow-y: hidden;
+}

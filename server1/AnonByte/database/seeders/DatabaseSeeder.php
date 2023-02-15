@@ -17,8 +17,9 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         // \App\Models\User::factory(10)->unverified()->create();
 
-        \App\Models\User::factory(151)->create([
-            'role_id' => 1
-        ]);
+        // \App\Models\User::factory(1)->create([
+        //     'role_id' => 1
+        // ]);
+
     }
 }

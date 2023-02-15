@@ -16,3 +16,15 @@
     cursor: pointer;
     border: none;
 }
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    height: 50px;
+    background-color: rgb(44, 40, 40);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

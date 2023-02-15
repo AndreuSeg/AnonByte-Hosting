@@ -1,17 +1,8 @@
 # Pi-Hole
-/server2/services/traefik/pi-hole/etc-pihole
-/server2/services/traefik/pi-hole/etc-dnsmasq.d
-/server2/services/traefik/pi-hole/docker-compose.yml
-
-# Logs Nginx
-/server2/services/traefik/docker/nginx/logs
+/server2/traefik/pi-hole/etc-pihole
+/server2/traefik/pi-hole/etc-dnsmasq.d
+/server2/traefik/pi-hole/docker-compose.yml
 
 # Base de datos
-/server2/services/traefik/mysql/mysql-anonbyte
-/server2/services/traefik/mysql/.env
-
-# VSFTPD
-/server1/services/vsftpd/logs
-/server1/services/vsftpd/.env
-/server2/services/vsftpd/logs
-/server2/services/vsftpd/.env
+/server2/traefik/mysql/mysql-anonbyte
+/server2/traefik/mysql/.env

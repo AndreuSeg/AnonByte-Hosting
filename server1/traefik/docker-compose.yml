@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  # Reverse proxy
+  traefik:
+    image: "traefik:v2.9"
+    ports:
+      - "80:80"
+      - "443:443"
+      # (Optional) Expose Dashboard
+      - "8080:8080"  # Don't do this in production!
+    volumes:
+      - ./config:/etc/traefik
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.entrypoints=web"
+    networks:
+      AnonByte:
+        ipv4_address: 10.0.0.2
+
+networks:
+  AnonByte:
+    external: true

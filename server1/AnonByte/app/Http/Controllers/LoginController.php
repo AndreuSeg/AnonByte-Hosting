@@ -26,6 +26,9 @@ class LoginController extends Controller
                 return view('usernotverified');
             }
 
+            if (Auth::user()->stack_created == false) {
+                return redirect()->route('view-stack');
+            }
             return redirect()->route('dashboard-home');
         } else {
             // Si las credencailes son invalidas devolvemos un mensaje de error

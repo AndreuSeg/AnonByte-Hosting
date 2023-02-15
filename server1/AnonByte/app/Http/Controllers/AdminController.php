@@ -81,7 +81,7 @@ class AdminController extends Controller
     private function _filter($users)
     {
         // Paginamos y filtramos por o email
-        $data = User::where('name', 'like', $users . '%')->orWhere('email', 'like', $users . '%')->paginate(12);
+        $data = User::where('name', 'like', $users . '%')->orWhere('email', 'like', $users . '%')->paginate(8);
         $data->appends(['users' => $users]);
         return $data;
     }

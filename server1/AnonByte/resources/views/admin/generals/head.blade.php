@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sign-up-in.css') }}">
     <link rel="icon" href="{{ asset('images/logo.png') }}">
-    @vite('resources/css/app.css')
+    {{-- @vite('resources/css/app.css') --}}
     <title>{{ env('APP_NAME') }} | @yield('tittle', 'Default')</title>
 </head>
 
@@ -32,6 +32,7 @@
     </script>
     {{-- Fin --}}
     <script src="{{ asset('js/index.js') }}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@
 
 @section('main')
     <div class="log-in-admin mt-40 w-full">
-        <h2>Log In Admins</h2>
+        <h2 class="text-4xl">Log In Admins</h2>
         <form class="log-in-form gap-3 p-4 w-2/6" method="POST" action="{{ route('login-admin') }}">
             @csrf
             <div class="textbox">

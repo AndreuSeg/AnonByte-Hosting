@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="icon" href="{{ asset('images/logo.png') }}">
-    @vite('resources/css/app.css')
+    {{-- @vite('resources/css/app.css') --}}
     <title>{{ env('APP_NAME') }} | @yield('tittle', 'Default')</title>
 </head>
 
@@ -24,15 +24,15 @@
             @show
         </aside>
         {{-- END ASIDE --}}
-        <main>
-            @yield('main')
-        </main>
-    </div>
+    <main>
+        @yield('main')
+    </main>
     {{-- Bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
     {{-- Fin --}}
+    <script src="https://cdn.tailwindcss.com"></script>
 </body>
 
 </html>

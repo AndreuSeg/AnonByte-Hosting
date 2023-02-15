@@ -56,10 +56,11 @@ class SignupController extends Controller
             'lastname' => $lastname,
             'email' => $email,
             'email_verified_at' => null,
+            'stack_created' => false,
             'password' => $password,
             'remeber_toker' => Str::random(10),
             'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'updated_at' => null,
             'deleted_At' => null,
         ]);
 

@@ -36,6 +36,8 @@ Route::post('/logout', [LoginController::class , 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboard-home');
+    Route::get('/create-stack', [DashboardController::class, 'viewStack'])->name('view-stack');
+    Route::post('/create-stack', [DashboardController::class, 'createStack'])->name('create-stack');
 });
 
 Route::get('/login-admin', [AdminController::class, 'viewForm'])->name('admin-form');

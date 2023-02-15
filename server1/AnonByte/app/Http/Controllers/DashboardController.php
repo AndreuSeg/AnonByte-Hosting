@@ -13,4 +13,13 @@ class DashboardController extends Controller
             'username' => $username
         ]);
     }
+
+    public function viewStack()
+    {
+        return view('dashboard.createstack');
+    }
+
+    public function createStack(Request $request)
+    {
+    }
 }
