@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\stackMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -54,7 +55,13 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+        // Middleware admin
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        // Middleware Usuarios
+        'user' => \App\Http\Middleware\userMiddleware::class,
+        // Middleware stack
+        'stack' => \App\Http\Middleware\stackMiddleware::class,
+        // Demas middlewares
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,

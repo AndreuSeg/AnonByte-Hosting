@@ -2,13 +2,13 @@
 @section('tittle', 'Login')
 
 @section('main')
-    <div class="log-in mt-40 w-full">
+    <div class="log-in pt-40 w-full">
         <h1 class="text-4xl">Log In</h1>
         <form class="log-in-form gap-3 p-4" method="POST" action="{{ route('login') }}">
             @csrf
             <div class="textbox">
                 <label class="mt-2 ml-2" for="email">Email</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('Credentials') is-invalid @enderror" type="email" name="email" placeholder="Email" required>
+                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('credentials') is-invalid @enderror" type="email" name="email" placeholder="Email" required>
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="password">Password</label>
@@ -37,11 +37,11 @@
                 <input class="ml-2" type="checkbox" name="remember"/>
                 <label class="ml-2" for="remember">Remeber me</label>
             </div>
-            @error('Credentials')
+            @error('credentials')
                 <p class="bg-slate-500 m-2 p-2 relative bottom-4">{{ $message }}</p>
             @enderror
             <button class="log-in-button text-white p-3 rounded relative bottom-4" type="submit">Iniciar sesión</button>
+            <p class="text-center">¿Todavia no tienes cuenta?<a class="no-unerline" href="{{ route('form-signup') }}"><br><b>Registrate</b></a></p>
         </form>
-        <p class="text-center">¿Todavia no tienes cuenta?<a class="no-unerline" href="{{ route('form-signup') }}"><br><b>Registrate</b></a></p>
     </div>
 @endsection

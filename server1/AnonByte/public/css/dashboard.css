@@ -5,6 +5,10 @@
     grid-template-columns: 14rem auto 23rem;
 }
 
+.over {
+    overflow-y: hidden;
+}
+
 /* START ASIDE */
 
 aside {
@@ -130,6 +134,53 @@ main {
     list-style: disc;
 }
 
+.explicacion button {
+    background-color: var(--buttons);
+    cursor: pointer;
+    border: none;
+}
+
+.explicacion button:hover {
+    opacity: 80%;
+}
+
+.stack-form {
+    display: flex;
+    justify-content: center;
+}
+
+.stack-form .container {
+    width: 100%;
+    height: 100%;
+    background-color: bisque;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+.stack-form .serverweb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stack-form .mysql {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stack-form .php {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stack-form .phpmyadmin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 /* FOOTER */
 
 footer {
@@ -142,8 +193,4 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.over {
-    overflow-y: hidden;
 }

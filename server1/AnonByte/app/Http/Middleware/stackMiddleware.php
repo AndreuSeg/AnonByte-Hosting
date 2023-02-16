@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class stackMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,9 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() && (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)) {
+        if (Auth::user() && Auth::user()->stack_created == true) {
             return $next($request);
         }
-
-        return abort(404);
+        return route('view-stack');
     }
 }

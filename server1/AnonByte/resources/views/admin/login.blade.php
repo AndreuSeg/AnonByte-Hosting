@@ -2,17 +2,17 @@
 @section('tittle', 'Login-Admin')
 
 @section('main')
-    <div class="log-in-admin mt-40 w-full">
+    <div class="log-in-admin pt-40 w-full">
         <h2 class="text-4xl">Log In Admins</h2>
         <form class="log-in-form gap-3 p-4 w-2/6" method="POST" action="{{ route('login-admin') }}">
             @csrf
             <div class="textbox">
                 <label class="mt-2 ml-2" for="email">Email</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('credentials') is-invalid @enderror" type="email" name="email" required>
+                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('credentials') is-invalid @enderror" type="email" name="email" placeholder="Email" required>
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="password">Password</label>
-                <input id="pass" class="pt-2 pb-2 pl-4 pr-4 rounded" type="password" name="password" required>
+                <input id="pass" class="pt-2 pb-2 pl-4 pr-4 rounded" type="password" name="password" placeholder="Contraseña" required>
                 <span>
                     <svg onclick="password()" class="eyeclosed" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                         class="bi bi-eye-slash" viewBox="0 0 16 16">
@@ -36,7 +36,7 @@
             @error('credentials')
                 <p class="bg-slate-500">{{ $message }}</p>
             @enderror
-            <button class="log-in-button p-3 rounded" type="submit">Iniciar sesión</button>
+            <button class="log-in-button text-white p-3 rounded" type="submit">Iniciar sesión</button>
         </form>
     </div>
 @endsection

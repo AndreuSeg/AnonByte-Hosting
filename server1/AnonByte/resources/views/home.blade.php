@@ -5,9 +5,9 @@
     <div class="padre gap-4 mt-32">
         <div class="info">
             <h1 class="text-2xl text-white">Pequeños detalles para hacer realidad<br><span class="text-3xl font-bold">Grandes sueños</span></h1>
-            <form action="{{ route('signup') }}">
+            <a href="{{ route('signup') }}">
                 <Button class="mt-2 text-white pl-10 pr-10 pt-2 pb-2 rounded">Empezar</Button>
-            </form>
+            </a>
         </div>
         <picture>
             <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" width="500" height="500"

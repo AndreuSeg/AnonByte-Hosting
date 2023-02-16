@@ -14,7 +14,12 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function viewStack()
+    public function viewSugests()
+    {
+        return view('dashboard.sugests');
+    }
+
+    public function viewStackForm()
     {
         return view('dashboard.createstack');
     }

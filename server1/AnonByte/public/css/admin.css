@@ -2,6 +2,8 @@ td:empty {
     background-color: #ffcccc;
 }
 
+/* FORMS */
+
 .log-in-admin, .padre {
     display: flex;
     flex-direction: column;
@@ -37,11 +39,17 @@ td:empty {
     border: none;
 }
 
+.log-in-admin .log-in-form .textbox input::placeholder, padre .user-edit .textbox input::placeholder {
+    color: white;
+}
+
 .log-in-admin .log-in-form button {
     background-color: var(--buttons);
     cursor: pointer;
     border: none;
 }
+
+/* INICIO DASHBOARD */
 
 .filtros {
     display: flex;

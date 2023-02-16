@@ -27,12 +27,12 @@ class LoginController extends Controller
             }
 
             if (Auth::user()->stack_created == false) {
-                return redirect()->route('view-stack');
+                return redirect()->route('view-sugests');
             }
             return redirect()->route('dashboard-home');
         } else {
             // Si las credencailes son invalidas devolvemos un mensaje de error
-            return redirect()->back()->withErrors(['Credentials' => 'Tus credenciales son incorrectas']);
+            return redirect()->back()->withErrors(['credentials' => 'Tus credenciales son incorrectas']);
         }
     }
 
