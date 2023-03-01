@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/prueba', [DashboardController::class, 'createStack'])->name('create-stack');
 
 Route::redirect('/', '/home');
 
@@ -34,7 +35,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/verify-mail/{id}', [VerifyMailController::class, 'index'])->name('verify-mail');
 Route::post('/logout', [LoginController::class , 'logout'])->name('logout');
 
-Route::middleware(['user'])->group(function() {
+Route::middleware(['auth','user'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboard-home')->middleware(['stack']);
     Route::get('/sugests', [DashboardController::class, 'viewSugests'])->name('view-sugests');
     Route::get('/create-stack', [DashboardController::class, 'viewStackForm'])->name('view-stack');

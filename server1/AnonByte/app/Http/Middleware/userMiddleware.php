@@ -20,8 +20,5 @@ class userMiddleware
         if (Auth::user() && Auth::user()->role_id == 1) {
             return $next($request);
         }
-        else {
-            return route('login');
-        }
     }
 }

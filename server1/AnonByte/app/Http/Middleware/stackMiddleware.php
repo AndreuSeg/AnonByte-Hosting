@@ -20,6 +20,8 @@ class stackMiddleware
         if (Auth::user() && Auth::user()->stack_created == true) {
             return $next($request);
         }
-        return route('view-stack');
+        elseif (Auth::user() && Auth::user()->stack_created == false) {
+            return redirect()->route('view-sugests');
+        }
     }
 }

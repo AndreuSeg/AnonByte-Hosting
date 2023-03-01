@@ -56,6 +56,7 @@
                     </div>
                 @endif
                 <button class="sign-up-button text-center p-3 rounded" type="submit">Registrarse</button>
+            </div>
         </form>
         <p class="text-center mt-4">¿Estas registrado ya?
             <a class="no-underline" href="{{ route('form-login') }}"><br>

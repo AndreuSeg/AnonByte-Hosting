@@ -17,18 +17,33 @@
 </head>
 
 <body>
-    <div class="stack-form w-full gap-24 p-16">
-        <div class="container serverweb">
-            <label for="service">Nginx o Apache</label>
-            <select class="selectservice w-24" name="service" id="service" onclick="">
-                <option class="option" id="nginx" value="nginx">Nginx</option>
-                <option class="option" id="apache" value="apache">Apache</option>
-            </select>
-            <div class="formulario"></div>
-        </div>
-        <div class="container mysql">Mysql</div>
-        <div class="container php">Php</div>
-        <div class="container phpmyadmin">PhpMyAdmin</div>
+    <div class="stack-form w-full pt-4">
+        <form class="gap-4" method="POST" action="{{ route('create-stack') }}">
+            @csrf
+            <div class="container serverweb">
+                <h1>Nginx</h1>
+                <div class="textbox">
+                    <label class="mt-2 ml-2" for="app_name">Nombre de la app o proyecto</label>
+                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="app_name" placeholder="Nombre de la app">
+                    <label class="mt-2 ml-2" for="zip_file_app">Zip con la app dentro</label>
+                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="file" name="app_name" placeholder="Zip file">
+                </div>
+            </div>
+            <div class="container mysql">
+                <h1>Mysql</h1>
+                <div class="textbox">
+                    <label class="mt-2 ml-2" for="database_name">Nombre BD</label>
+                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="database_name" placeholder="Nombre de la BD">
+                    <label class="mt-2 ml-2" for="user_mysql">Mysql User</label>
+                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="user_mysql" placeholder="Usuario Mysql">
+                    <label class="mt-2 ml-2" for="user_password_mysql">Mysql User Password</label>
+                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="password" name="user_password_mysql" placeholder="Contraseña usuario">
+                    <label class="mt-2 ml-2" for="root_password">Root Password</label>
+                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="password" name="root_password" placeholder="Contraseña root">
+                </div>
+            </div>
+            <button class="create-stack-button text-center p-3 rounded w-40" type="submit">Create Stack</button>
+        </form>
     </div>
     <footer>
         <p>Copyright: <span id="current-year"></span></p>

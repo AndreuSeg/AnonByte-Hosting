@@ -9,6 +9,117 @@
     overflow-y: hidden;
 }
 
+/* CREAR STACK */
+
+.explicacion {
+    display: flex;
+    flex-direction: column;
+}
+
+.explicacion .consejos {
+    display: flex;
+    flex-direction: column;
+}
+
+.explicacion .consejos .consejo {
+    display: flex;
+    flex-direction: column;
+}
+
+.explicacion .consejos .consejo h3 ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.explicacion .consejos .consejo h3 ul li {
+    list-style: disc;
+}
+
+.explicacion button {
+    background-color: var(--buttons);
+    cursor: pointer;
+    border: none;
+}
+
+.explicacion button:hover {
+    opacity: 80%;
+}
+
+.stack-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stack-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stack-form h1 {
+    font-size: 2rem;
+}
+
+.stack-form form .container {
+    background-color: bisque;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    width: 50%;
+    max-width: 500px;
+}
+
+.stack-form form .container .textbox {
+    display: flex;
+    flex-direction: column;
+}
+
+.stack-form form .container .textbox label {
+    zoom: 120%;
+}
+
+.stack-form form .container .textbox input {
+    zoom: 120%;
+    background-color: var(--light_blue);
+    border: none;
+    outline: none;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.stack-form form .container .textbox input:focus {
+    opacity: 85%;
+    box-shadow: 0 0 0.5rem var(--blue);
+    border: none;
+}
+
+.stack-form form .container .textbox input::placeholder {
+    color: white;
+}
+
+.stack-form form .container .serverweb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stack-form form .container .mysql {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stack-form form button{
+    background-color: var(--buttons);
+    cursor: pointer;
+    border: none;
+}
+
+.stack-form form button:hover {
+    opacity: 80%;
+}
+
 /* START ASIDE */
 
 aside {
@@ -89,6 +200,8 @@ aside form:hover {
 
 /* END ASIDE */
 
+/* Dashboard */
+
 main {
     margin-top: 2rem;
 }
@@ -106,80 +219,7 @@ main {
     padding: 2rem;
 }
 
-/* CREAR STACK */
-
-.explicacion {
-    display: flex;
-    flex-direction: column;
-}
-
-.explicacion .consejos {
-    display: flex;
-    flex-direction: column;
-}
-
-.explicacion .consejos .consejo {
-    display: flex;
-    flex-direction: column;
-}
-
-.explicacion .consejos .consejo h3 ul {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-top: 5px;
-}
-
-.explicacion .consejos .consejo h3 ul li {
-    list-style: disc;
-}
-
-.explicacion button {
-    background-color: var(--buttons);
-    cursor: pointer;
-    border: none;
-}
-
-.explicacion button:hover {
-    opacity: 80%;
-}
-
-.stack-form {
-    display: flex;
-    justify-content: center;
-}
-
-.stack-form .container {
-    width: 100%;
-    height: 100%;
-    background-color: bisque;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-}
-
-.stack-form .serverweb {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stack-form .mysql {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stack-form .php {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stack-form .phpmyadmin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+/* End dashboard */
 
 /* FOOTER */
 
@@ -193,4 +233,12 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 1050px) {
+    .stack-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 }
