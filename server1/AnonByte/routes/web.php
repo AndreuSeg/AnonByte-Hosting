@@ -20,8 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/prueba', [DashboardController::class, 'createStack'])->name('create-stack');
-
 Route::redirect('/', '/home');
 
 Route::get('/home', [HomeController::class, 'viewHome'])->name('home');
@@ -37,6 +35,7 @@ Route::post('/logout', [LoginController::class , 'logout'])->name('logout');
 
 Route::middleware(['auth','user'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboard-home')->middleware(['stack']);
+    Route::get('/dashboard/stats', [DashboardController::class, 'stats'])->name('dashboard.stats');
     Route::get('/sugests', [DashboardController::class, 'viewSugests'])->name('view-sugests');
     Route::get('/create-stack', [DashboardController::class, 'viewStackForm'])->name('view-stack');
     Route::post('/create-stack', [DashboardController::class, 'createStack'])->name('create-stack');

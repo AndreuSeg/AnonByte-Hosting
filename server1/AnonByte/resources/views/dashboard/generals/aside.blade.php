@@ -1,5 +1,5 @@
 <div class="top bg-white mt-6">
-    <div class="logo gap-2">
+    <div class="logo gap-2 pt-2 pb-2">
         <img class="w-16 h-16" src="{{ asset('images/logo.png') }}" alt="logo">
         <h2 class="font-extrabold text-2xl">Anon<span class="blue text-blue-500">Byte</span></h2>
     </div>
@@ -13,10 +13,6 @@
         <h3>Dashboard</h3>
     </a>
     <a href="">
-        <i class="bi bi-database"></i>
-        <h3>Databases</h3>
-    </a>
-    <a href="">
         <i class="bi bi-folder"></i>
         <h3>File Manager</h3>
     </a>
@@ -27,6 +23,6 @@
     <form class="ml-8 gap-3" action="{{ route('logout') }}" method="post">
         @csrf
         <i class="bi bi-box-arrow-right"></i>
-        <button>Log Out</button>
+        <button>Log Out<br><span class="text-blue-500">{{ $username }}</span></button>
     </form>
 </div>

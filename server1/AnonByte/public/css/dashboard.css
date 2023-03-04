@@ -2,11 +2,8 @@
     display: grid;
     width: 96%;
     background-color: var(--bg);
-    grid-template-columns: 14rem auto 23rem;
-}
-
-.over {
-    overflow-y: hidden;
+    grid-template-columns: 14rem auto 2rem;
+    overflow: hidden;
 }
 
 /* CREAR STACK */
@@ -120,7 +117,7 @@
     opacity: 80%;
 }
 
-/* START ASIDE */
+/* START NAV */
 
 aside {
     height: 100vh;
@@ -138,11 +135,13 @@ aside .top .logo {
     align-items: center;
 }
 
+aside .top .logo h2, aside .top .logo span {
+    font-size: 1.8rem;
+}
+
 aside .close {
     display: none;
 }
-
-/* SIDEBAR */
 
 aside .sidebar {
     height: 86vh;
@@ -198,24 +197,67 @@ aside form:hover {
     color: var(--light_blue);
 }
 
-/* END ASIDE */
+/* END NAV */
 
 /* Dashboard */
 
 main {
     margin-top: 2rem;
+    overflow: hidden;
 }
 
-.pruebapadre {
+
+.dashboard {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
 }
 
-.prueba {
-    width: 200px;
-    height: 200px;
+.dashboard .stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard .stats table {
+    border-style: solid;
+    border-color: rgb(100 116 139);
+    border-width: 2px;
+    table-layout: auto;
+    border-spacing: 1.25rem 1.25rem;
+    border-collapse: collapse;
+    --tw-shadow-color: #475569;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.dashboard .stats table thead {
+    background-color: rgb(148 163 184);
+}
+
+.dashboard .stats table thead tr td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(100 116 139);
+    text-align: center;
+    font-weight: 700;
+}
+
+.dashboard .stats table tbody tr td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgb(226 232 240);
+    text-align: center;
+}
+
+.dashboard .other_staff {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.dashboard .other_staff .cont {
+    width: 100%;
+    height: 300px;
     background-color: bisque;
-    margin: 2rem;
     padding: 2rem;
 }
 

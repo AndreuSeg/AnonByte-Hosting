@@ -49,7 +49,7 @@ class SignupController extends Controller
         $roleId = $role->id;
 
         // Con el modelo de user registramos al us usuario en la base de datos
-        $store = User::create([
+        User::create([
             'role_id' => $roleId,
             'username' => $username,
             'name' => $name,

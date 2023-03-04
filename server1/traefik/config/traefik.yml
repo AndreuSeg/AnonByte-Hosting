@@ -37,6 +37,9 @@ entryPoints:
   websecure:
     address: :443
 
+  database:
+    address: :3306
+
 # Configure your CertificateResolver here...
 # ---
 # certificatesResolvers:

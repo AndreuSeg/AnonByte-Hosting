@@ -4,9 +4,11 @@ services:
   # Reverse proxy
   traefik:
     image: "traefik:v2.9"
+    container_name: traefik
     ports:
       - "80:80"
-      # - "443:443"
+      - "443:443"
+      - "3307:3306"
       # (Optional) Expose Dashboard
       - "8080:8080"  # Don't do this in production!
     volumes:
@@ -17,6 +19,7 @@ services:
       - "traefik.http.routers.api.rule=Host(`traefik.localhost`)"
       - "traefik.http.routers.api.service=api@internal"
       - "traefik.http.routers.api.entrypoints=web"
+    restart: always
     networks:
       AnonByte:
         ipv4_address: 10.0.0.2
