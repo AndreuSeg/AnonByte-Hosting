@@ -34,7 +34,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/verify-mail/{id}', [VerifyMailController::class, 'index'])->name('verify-mail');
 
-Route::middleware(['auth', 'user'])->group(function () {
+Route::middleware(['auth', 'user'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboard-home')->middleware(['stack']);
     Route::get('/dashboard/stats', [DashboardController::class, 'stats'])->name('dashboard.stats');
     Route::get('/sugests', [DashboardController::class, 'viewSugests'])->name('view-sugests');
@@ -45,10 +45,10 @@ Route::middleware(['auth', 'user'])->group(function () {
 Route::get('/login-admin', [AdminController::class, 'viewForm'])->name('admin-form');
 Route::post('/login-admin', [AdminController::class, 'login'])->name('login-admin');
 
-Route::middleware(['admin'])->group(function () {
-    Route::prefix('/admin')->name('admin.')->group(function () {
+Route::middleware(['admin'])->group(function() {
+    Route::prefix('/admin')->name('admin.')->group(function() {
 
-        Route::prefix('/users')->name('users.')->group(function () {
+        Route::prefix('/users')->name('users.')->group(function() {
             Route::get('/', [AdminController::class, 'viewTable'])->name('users-table');
             Route::get('/edit/{id}', [AdminController::class, 'editUser'])->name('edit-user');
             Route::delete('/{id}', [AdminController::class, 'deleteUser'])->name('delete-user');

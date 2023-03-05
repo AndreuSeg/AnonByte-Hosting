@@ -201,11 +201,6 @@ aside form:hover {
 
 /* Dashboard */
 
-main {
-    margin-top: 2rem;
-    overflow: hidden;
-}
-
 
 .dashboard {
     display: grid;

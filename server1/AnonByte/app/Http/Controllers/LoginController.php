@@ -24,13 +24,18 @@ class LoginController extends Controller
         if (Auth::attempt($input, $remember) && (Auth::user()->role_id == 1)) {
             // Verificamos si el usuario esta verificado
             if (Auth::user()->email_verified_at == null) {
-                return view('usernotverified');
+                return abort(403);
             }
 
             if (Auth::user()->stack_created == false) {
                 return redirect()->route('view-sugests');
             }
             return redirect()->route('dashboard-home');
+        } elseif (Auth::attempt($input, $remember) && (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)) {
+            return redirect()->route('login-admin');
+        } else {
+            session()->flash('error', ['message' => "Credenciales Incorrectas"]);
+            return redirect()->back();
         }
     }
 

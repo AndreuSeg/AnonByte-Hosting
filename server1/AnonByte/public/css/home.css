@@ -17,9 +17,48 @@
     border: none;
 }
 
-footer {
-    position: absolute;
-    bottom: 0;
+.contenedor {
+    background-color: beige;
+    margin-top: 18rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 25rem;
+    height: 100%;
+}
+
+.contenedor h1 {
+    font-weight: 700;
+    font-size: 40px;
+    color: black;
+    padding-top: 30px;
+}
+
+.contenedor .services {
+    display: flex;
+    margin-top: 20px;
+    gap: 20rem;
+}
+
+.contenedor .services .col1, .contenedor .services .col2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedor .services .col1 .cel img, .contenedor .services .col2 .cel img {
+    position: relative;
+    top: 20px;
+    width: 20px;
+}
+
+.contenedor .services .col1 .cel p, .contenedor .services .col2 .cel p {
+    position: relative;
+    left: 25px;
+}
+
+/* footer {
+    position: sticky;
+    bottom: 0px;
     width: 100vw;
     height: 50px;
     background-color: rgb(44, 40, 40);
@@ -27,4 +66,4 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */

@@ -4,12 +4,12 @@
 @section('main')
     <div class="log-in-admin pt-40 w-full">
         <h2 class="text-4xl">Log In Admin</h2>
-        <form class="log-in-form gap-3 p-4 w-2/6" method="POST" action="{{ route('login-admin') }}">
+        <form class="log-in-form gap-3 p-4" method="POST" action="{{ route('login-admin') }}">
             @csrf
             <div class="textbox">
                 <label class="mt-2 ml-2" for="email">Email</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('email') is-invalid @enderror" type="email"
-                    name="email" placeholder="Email">
+                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('email') is-invalid @enderror" type="email" name="email"
+                    placeholder="Email">
 
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -19,7 +19,7 @@
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="password">Password</label>
-                <input id="pass" class="pt-2 pb-2 pl-4 pr-4 rounded @error('password') is-invalid @enderror"
+                <input id="pass2" class="pt-2 pb-2 pl-4 pr-4 rounded @error('password') is-invalid @enderror"
                     type="password" name="password" placeholder="Contraseña">
 
                 @error('password')
@@ -30,8 +30,8 @@
 
                 {{-- Butones para mostrar ocultar contraseña --}}
                 <span>
-                    <svg onclick="password()" class="eyeclosed" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                        class="bi bi-eye-slash" viewBox="0 0 16 16">
+                    <svg onclick="password2()" class="eyeclosed2" xmlns="http://www.w3.org/2000/svg" width="20"
+                        height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                         <path
                             d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
                         <path
@@ -41,7 +41,7 @@
                     </svg>
                 </span>
                 <span>
-                    <svg onclick="password()" class="eye" xmlns="http://www.w3.org/2000/svg" width="20"
+                    <svg onclick="password2()" class="eye2" xmlns="http://www.w3.org/2000/svg" width="20"
                         height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                         <path
                             d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
@@ -51,6 +51,11 @@
                 {{-- Butones para mostrar ocultar contraseña --}}
 
             </div>
+            @if (session()->has('error'))
+                <div class="alert alert-danger w-full">
+                    <i class="bi bi-exclamation-triangle"></i> {{ session()->get('error')['message'] }}
+                </div>
+            @endif
             <button class="log-in-button text-white p-3 rounded" type="submit">Iniciar sesión</button>
         </form>
     </div>

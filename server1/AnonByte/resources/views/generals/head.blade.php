@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/nav.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sign-up-in.css') }}">
     <link rel="icon" href="{{ asset('images/logo.png') }}">
-    {{-- @vite('resources/css/app.css') --}}
+    @vite('resources/css/app.css')
     <title>{{ env('APP_NAME') }} | @yield('tittle', 'Default')</title>
 </head>
 
@@ -26,15 +26,14 @@
     <main>
         @yield('main')
     </main>
-    <footer>
+    {{-- <footer>
         <p>Copyright: <span id="current-year"></span></p>
-    </footer>
+    </footer> --}}
     {{-- Bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/index.js') }}"></script>
-    <script src="https://cdn.tailwindcss.com"></script> {{-- En produccion quitar cdn tailwind --}}
 </body>
 
 </html>

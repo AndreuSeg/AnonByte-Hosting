@@ -4,7 +4,8 @@
 @section('main')
     <div class="padre gap-4 mt-32">
         <div class="info">
-            <h1 class="text-2xl text-white">Pequeños detalles para hacer realidad<br><span class="text-3xl font-bold">Grandes sueños</span></h1>
+            <h1 class="text-2xl text-white">Pequeños detalles para hacer realidad<br><span class="text-3xl font-bold">Grandes
+                    sueños</span></h1>
             <a href="{{ route('signup') }}">
                 <Button class="mt-2 text-white pl-10 pr-10 pt-2 pb-2 rounded">Empezar</Button>
             </a>
@@ -126,5 +127,54 @@
                     transform="translate(-134.50708 -51.33254)" fill="#00b0ff" />
             </svg>
         </picture>
+    </div>
+    <div class="contenedor">
+        <h1>Nuestros servicios incluyen:</h1>
+        <div class="services">
+            <div class="col1">
+                <div class="cel">
+                    <img src="{{ asset('images/ssl.png') }}" alt="ssl">
+                    <p>Certificados SSL</p>
+                </div>
+                <div class="cel">
+                    <img src="{{ asset('images/dominio.png') }}" alt="dominio">
+                    <p>Dominio Personalizado</p>
+                </div>
+                <div class="cel">
+                    <img src="{{ asset('images/mysql.png') }}" alt="mysql">
+                    <p>Base de Datos MYSQL</p>
+                </div>
+                <div class="cel">
+                    <img src="{{ asset('images/backup.png') }}" alt="backup">
+                    <p>Copias de Seguridad Periódicas</p>
+                </div>
+                <div class="cel">
+                    <img src="{{ asset('images/dashboard.png') }}" alt="dashboard">
+                    <p>Dashboard con Estadisticas en Tiempo Real</p>
+                </div>
+            </div>
+            <div class="col2">
+                <div class="cel">
+                    <img src="{{ asset('images/loadbalancing.png') }}" alt="loadbalancing">
+                    <p>Load Balancers</p>
+                </div>
+                <div class="cel">
+                    <img src="{{ asset('images/config.png') }}" alt="config">
+                    <p>Configuracion Fácil</p>
+                </div>
+                <div class="cel">
+                    <img src="{{ asset('images/files.png') }}" alt="files">
+                    <p>Explorador de Archivos</p>
+                </div>
+                <div class="cel">
+                    <img src="{{ asset('images/logs.png') }}" alt="logs">
+                    <p>Logs</p>
+                </div>
+                <div class="cel">
+                    <img src="{{ asset('images/asistencia.png') }}" alt="asistencia">
+                    <p>Soporte 24/7</p>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

@@ -8,8 +8,8 @@
             @csrf
             <div class="textbox">
                 <label class="mt-2 ml-2" for="email">Email</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('email') is-invalid @enderror" type="email"
-                    name="email" placeholder="Email">
+                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('email') is-invalid @enderror" type="email" name="email"
+                    placeholder="Email">
 
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -51,6 +51,11 @@
                 {{-- Butones para mostrar ocultar contraseña --}}
 
             </div>
+            @if (session()->has('error'))
+                <div class="alert alert-danger w-full">
+                    <i class="bi bi-exclamation-triangle"></i> {{ session()->get('error')['message'] }}
+                </div>
+            @endif
             <div class="flex flex-row relative bottom-4">
                 <input class="ml-2" type="checkbox" name="remember" />
                 <label class="ml-2" for="remember">Remeber me</label>
