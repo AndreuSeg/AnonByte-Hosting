@@ -55,6 +55,10 @@
     color: white;
 }
 
+.invalid-feedback {
+    padding-left: 1rem;
+}
+
 .eyeclosed {
     position: relative;
     left: 96.5%;

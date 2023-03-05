@@ -30,8 +30,9 @@ Route::post('/signup', [SignupController::class, 'signup'])->name('signup');
 
 Route::get('/login', [LoginController::class, 'viewForm'])->name('form-login');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::get('/verify-mail/{id}', [VerifyMailController::class, 'index'])->name('verify-mail');
 Route::post('/logout', [LoginController::class , 'logout'])->name('logout');
+
+Route::get('/verify-mail/{id}', [VerifyMailController::class, 'index'])->name('verify-mail');
 
 Route::middleware(['auth','user'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboard-home')->middleware(['stack']);

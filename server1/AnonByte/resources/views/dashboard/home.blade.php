@@ -14,7 +14,6 @@
                 });
             }, 3000); // Envía la petición cada 3 segundos
         </script>
-
         <div class="other_staff gap-4">
             <div class="cont files">
             </div>

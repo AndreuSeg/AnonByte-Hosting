@@ -15,6 +15,11 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:8|string',
+        ]);
+
         // Recuperamos las credenciales
         $input = $request->only('email', 'password');
         if (Auth::attempt($input) && (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)) {
@@ -24,9 +29,6 @@ class AdminController extends Controller
             }
 
             return redirect()->route('admin.users.users-table');
-        } else {
-            // Si las credencailes son invalidas devolvemos un mensaje de error
-            return redirect()->back()->withErrors(['credentials' => 'Las credenciales son incorrectas']);
         }
     }
 
@@ -57,7 +59,6 @@ class AdminController extends Controller
     {
         // Recuperamos el usuario a eliminar
         $user = User::where('id', $id)->firstOrFail();
-        // Lo borramos
         $user->delete();
         return redirect()->route('admin.users.users-table')->with('message', 'Usuario eliminado correctamte');
     }

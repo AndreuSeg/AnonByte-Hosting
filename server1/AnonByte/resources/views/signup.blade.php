@@ -8,25 +8,62 @@
             @csrf
             <div class="textbox">
                 <label class="mt-2 ml-2" for="username">Username</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="username" placeholder="Nombre de usuario" required>
+                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('username') is-invalid @enderror" type="text"
+                    name="username" placeholder="Nombre de usuario">
+
+                @error('username')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
             <div class="fullname gap-3">
                 <div class="textbox">
                     <label class="mt-2 ml-2" for="name">Name</label>
-                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="name" placeholder="Nombre" required>
+                    <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('name') is-invalid @enderror" type="text"
+                        name="name" placeholder="Nombre">
+
+                    @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
                 <div class="textbox">
                     <label class="mt-2 ml-2" for="lastname">Last Name</label>
-                    <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="text" name="lastname" placeholder="Apellidos" required>
+                    <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('lastname') is-invalid @enderror" type="text"
+                        name="lastname" placeholder="Apellidos">
+
+                    @error('lastname')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="email">Email</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded" type="email" name="email" placeholder="Email" required>
+                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('email') is-invalid @enderror" type="email"
+                    name="email" placeholder="Email">
+
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="password">Password</label>
-                <input id="pass" class="pt-2 pb-2 pl-4 pr-4 rounded" type="password" name="password" placeholder="Contraseña" required>
+                <input id="pass" class="pt-2 pb-2 pl-4 pr-4 rounded @error('password') is-invalid @enderror"
+                    type="password" name="password" placeholder="Contraseña">
+
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+
+                {{-- Butones para mostrar ocultar contraseña --}}
                 <span>
                     <svg onclick="password()" class="eyeclosed" xmlns="http://www.w3.org/2000/svg" width="20"
                         height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
@@ -46,19 +83,12 @@
                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                     </svg>
                 </span>
-                @if ($errors->any())
-                    <div class="bg-slate-600 m-2 p-2">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                {{-- Butones para mostrar ocultar contraseña --}}
+
                 <button class="sign-up-button text-center p-3 rounded" type="submit">Registrarse</button>
             </div>
         </form>
-        <p class="text-center mt-4">¿Estas registrado ya?
+        <p class="text-center">¿Estas registrado ya?
             <a class="no-underline" href="{{ route('form-login') }}"><br>
                 <b>Accede a tu cuenta</b>
             </a>

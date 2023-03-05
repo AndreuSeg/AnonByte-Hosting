@@ -18,11 +18,13 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
+            'role_id' => 1,
             'username' => fake()->name(),
             'name' => fake()->name(),
             'lastname' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'stack_created' => false,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
@@ -37,6 +39,13 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    public function stackCreated()
+    {
+        return $this->state(fn (array $attributes) => [
+            'stack_created' => true,
         ]);
     }
 }

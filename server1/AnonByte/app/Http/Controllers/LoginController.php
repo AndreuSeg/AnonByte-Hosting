@@ -13,9 +13,14 @@ class LoginController extends Controller
         return view('login');
     }
 
-    // Con el middleware de autenticaciónd de laravel comprovamos las credenciales
+    // Con el middleware de autenticación de laravel comprobamos las credenciales
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:8|string',
+        ]);
+
         // Recuperamos las credenciales
         $input = $request->only('email', 'password');
         $remember = $request->has('remember');
@@ -30,9 +35,6 @@ class LoginController extends Controller
                 return redirect()->route('view-sugests');
             }
             return redirect()->route('dashboard-home');
-        } else {
-            // Si las credencailes son invalidas devolvemos un mensaje de error
-            return redirect()->back()->withErrors(['credentials' => 'Tus credenciales son incorrectas']);
         }
     }
 

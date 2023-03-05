@@ -1,7 +1,7 @@
 # Pi-Hole
-/server2/traefik/pi-hole/etc-pihole
-/server2/traefik/pi-hole/etc-dnsmasq.d
-/server2/traefik/pi-hole/docker-compose.yml
+/server2/pi-hole/etc-pihole
+/server2/pi-hole/etc-dnsmasq.d
+/server2/pi-hole/docker-compose.yml
 
 # Base de datos
 /server2/traefik/mysql/mysql-anonbyte

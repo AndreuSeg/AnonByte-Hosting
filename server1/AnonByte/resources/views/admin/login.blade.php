@@ -3,16 +3,32 @@
 
 @section('main')
     <div class="log-in-admin pt-40 w-full">
-        <h2 class="text-4xl">Log In Admins</h2>
+        <h2 class="text-4xl">Log In Admin</h2>
         <form class="log-in-form gap-3 p-4 w-2/6" method="POST" action="{{ route('login-admin') }}">
             @csrf
             <div class="textbox">
                 <label class="mt-2 ml-2" for="email">Email</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('credentials') is-invalid @enderror" type="email" name="email" placeholder="Email" required>
+                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('email') is-invalid @enderror" type="email"
+                    name="email" placeholder="Email">
+
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="password">Password</label>
-                <input id="pass" class="pt-2 pb-2 pl-4 pr-4 rounded" type="password" name="password" placeholder="Contraseña" required>
+                <input id="pass" class="pt-2 pb-2 pl-4 pr-4 rounded @error('password') is-invalid @enderror"
+                    type="password" name="password" placeholder="Contraseña">
+
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+
+                {{-- Butones para mostrar ocultar contraseña --}}
                 <span>
                     <svg onclick="password()" class="eyeclosed" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                         class="bi bi-eye-slash" viewBox="0 0 16 16">
@@ -32,10 +48,9 @@
                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                     </svg>
                 </span>
+                {{-- Butones para mostrar ocultar contraseña --}}
+
             </div>
-            @error('credentials')
-                <p class="bg-slate-500">{{ $message }}</p>
-            @enderror
             <button class="log-in-button text-white p-3 rounded" type="submit">Iniciar sesión</button>
         </form>
     </div>

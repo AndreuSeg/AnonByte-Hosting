@@ -18,7 +18,7 @@
     </div>
     <div class="tabla">
         @if (session('message'))
-            <p class="bg-slate-500 p-3 rounded mt-2 text-white">{{ session('message') }}</p>
+            <p class="bg-slate-500 p-1 rounded mt-2 text-white">{{ session('message') }}</p>
         @endif
         <table class="users-table border-solid border-slate-500 border-2 table-auto mt-2 border-spacing-5 border-collapse shadow-slate-600 shadow-2xl">
             <thead class="bg-gray-400">

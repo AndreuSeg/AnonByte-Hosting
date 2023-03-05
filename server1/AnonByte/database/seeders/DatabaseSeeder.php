@@ -14,12 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        // \App\Models\User::factory(10)->unverified()->create();
-
-        // \App\Models\User::factory(1)->create([
-        //     'role_id' => 1
-        // ]);
+        \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->stackCreated()->create();
+        \App\Models\User::factory(10)->unverified()->create();
 
     }
 }
