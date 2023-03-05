@@ -18,9 +18,7 @@
 
 <body>
     <header>
-        @section('header')
-            @include('admin.generals.navbar')
-        @show
+        @yield('nav')
     </header>
     <main>
         @yield('main')

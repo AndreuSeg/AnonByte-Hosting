@@ -1,3 +1,5 @@
+/.vscode
+
 # Pi-Hole
 /server2/pi-hole/etc-pihole
 /server2/pi-hole/etc-dnsmasq.d

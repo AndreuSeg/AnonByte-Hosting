@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SignupUserRequest;
 use App\Mail\VerifyMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,28 +15,15 @@ use Illuminate\Support\Facades\Mail;
 
 class SignupController extends Controller
 {
-    // Renderizamos la vista del formulario
     public function viewForm()
     {
         return view('signup');
     }
 
-    public function signup(Request $request)
+    public function signup(SignupUserRequest $request)
     {
-        /**
-         * Store a new user.
-         *
-         * @param  \Illuminate\Http\Request  $request
-         * @return \Illuminate\Http\Response
-         */
         // Recuperamos los datos pasados por el formulario, y los validamos.
-        $request->validate([
-            'username' => 'required|max:50',
-            'name' => 'required|string|max:30',
-            'lastname' => 'required|string|max:30',
-            'email' => 'required|email|max:255',
-            'password' => 'required|min:8|string',
-        ]);
+        $request->validated();
 
         $username = $request->input('username');
         $name = $request->input('name');
@@ -64,15 +52,16 @@ class SignupController extends Controller
             'deleted_At' => null,
         ]);
 
+        // Recuperamos el id del usuario creado previamente
         $id = User::select('id')->where('email', $email)->get();
         $id = $id[0];
 
+        // Enviamos un email para verificar
         Mail::to($email)->send(new VerifyMail($id));
 
         return redirect()->route('login');
     }
 
-    // Hasheamos la contraseña
     private function _safePassword($password)
     {
         $password = Hash::make($password);

@@ -2,24 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    // Renderizamos la vista del formulario
     public function viewForm()
     {
         return view('login');
     }
 
-    // Con el middleware de autenticación de laravel comprobamos las credenciales
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|max:255',
-            'password' => 'required|min:8|string',
-        ]);
+        $request->validated();
 
         // Recuperamos las credenciales
         $input = $request->only('email', 'password');
@@ -38,7 +34,6 @@ class LoginController extends Controller
         }
     }
 
-    // Logout con el middleware de autenticación
     public function logout()
     {
         Auth::logout();

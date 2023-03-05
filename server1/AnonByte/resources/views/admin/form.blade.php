@@ -24,9 +24,8 @@
             </div>
             <button class="save-button text-center text-white p-3 rounded" type="submit">Guardar</button>
         </form>
-        <form class="flex flex-col p-4 pt-0 w-2/6" action="{{ route('admin.users.users-table') }}">
-            @csrf
+        <a class="flex flex-col p-4 pt-0 w-2/6" href="{{ route('admin.users.users-table') }}">
             <button class="volver bg-slate-400 text-white p-3 rounded" type="submit">Volver</button>
-        </form>
+        </a>
     </div>
 @endsection

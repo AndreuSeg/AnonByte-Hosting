@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -13,12 +14,9 @@ class AdminController extends Controller
         return view('admin.login');
     }
 
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|max:255',
-            'password' => 'required|min:8|string',
-        ]);
+        $request->validated();
 
         // Recuperamos las credenciales
         $input = $request->only('email', 'password');
@@ -60,7 +58,9 @@ class AdminController extends Controller
         // Recuperamos el usuario a eliminar
         $user = User::where('id', $id)->firstOrFail();
         $user->delete();
-        return redirect()->route('admin.users.users-table')->with('message', 'Usuario eliminado correctamte');
+
+        session()->flash('alert', ['message' => "User $user->name has been deleted"]);
+        return redirect()->route('admin.users.users-table');
     }
 
     public function saveUser(Request $request, $id)
@@ -75,14 +75,15 @@ class AdminController extends Controller
         // Guardamos los cambios
         $user->save();
 
-        return redirect()->route('admin.users.users-table')->with('message', 'Usuario modificado correctamente');
+        session()->flash('alert', ['message' => "User $user->name has been updated"]);
+        return redirect()->route('admin.users.users-table');
     }
 
-    // Funcion privada para filtrar segun nombre
+    // Funcion privada para filtrar segun nombre o email
     private function _filter($users)
     {
         // Paginamos y filtramos por o email
-        $data = User::where('name', 'like', $users . '%')->orWhere('email', 'like', $users . '%')->paginate(8);
+        $data = User::where('name', 'like', $users . '%')->orWhere('email', 'like', $users . '%')->paginate(3);
         $data->appends(['users' => $users]);
         return $data;
     }
