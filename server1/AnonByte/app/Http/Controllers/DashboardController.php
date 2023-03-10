@@ -11,43 +11,54 @@ class DashboardController extends Controller
 {
     public function stats()
     {
-        $output = shell_exec("docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemPerc}}\t{{.MemUsage}}\t{{.NetIO}}' $(docker ps --format '{{.ID}} {{.Names}}' | grep '_4_' | awk '{print $1}')");
+        // Recuperamos el ID del usuario
+        $id = (Auth::id());
+        // Lo pasamos a str
+        $ids = strval($id);
+        $ids = "_" . $ids . "_";
+        $output = shell_exec("docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemPerc}}\t{{.MemUsage}}\t{{.NetIO}}'
+        $(docker ps --format '{{.ID}} {{.Names}}' | grep '$ids' | awk '{print $1}')");
         $rows = explode("\n", trim($output));
+
+        // Verifica si el número de elementos en el array es diferente de 5.
         if (count($rows) != 5) {
+            // Si el número de elementos es diferente de 5, devuelve un mensaje de error.
             $result = "No tienes contenedores encendidos";
         } else {
-            ob_start(); // Inicia el buffer de salida
+            // Si el número de elementos es igual a 5, inicia el buffer de salida.
+            ob_start(); // Inicia el buffer de salida.
+
+            // Empieza a generar la tabla HTML.
             echo "<table>";
             $isHeader = true;
             foreach ($rows as $index => $row) {
+                // Divide la cadena de caracteres en elementos más pequeños, utilizando un espacio como separador.
                 $row = explode(" ", $row);
+                // Elimina los elementos vacíos del array.
                 $row = array_filter($row, function ($valor) {
                     return !empty($valor);
                 });
 
-                // Ejecutamos la funcion privada para ordenar los indices del array.
+                // Llama a una función privada para reordenar los índices del array.
                 $reorderedArray = $this->_reorderArrayIndexes($row);
                 $newArray = [];
 
-                // Agregar los elementos según el orden especificado
+                // Si es la primera fila de la tabla (encabezado), llama a una función privada para ordenar los elementos.
                 if ($index == 0) {
                     $newArray = $this->_element0($reorderedArray);
+                    // Empieza el encabezado de la tabla HTML.
                     echo "<thead><tr>";
                     foreach ($newArray as $item) {
-                        echo "<td>$item</td>";
-                    }
-                    echo "</tr></thead><tbody>";
-                } else {
-                    $newArray = $this->_otherElements($reorderedArray);
-                    echo "<tr>";
-                    foreach ($newArray as $item) {
+                        // Agrega cada elemento al encabezado de la tabla HTML.
                         echo "<td>$item</td>";
                     }
                     echo "</tr>";
                 }
             }
+            // Cerramos la tabla
             echo "</tbody></table>";
-            $result = ob_get_clean(); // Obtiene y limpia el contenido del buffer de salida
+            // Obtiene y limpia el contenido del buffer de salida
+            $result = ob_get_clean();
         }
         return $result;
     }
@@ -77,21 +88,47 @@ class DashboardController extends Controller
         // Recuperamos el ID del usuario
         $id = (Auth::id());
         // Lo pasamos a str
-        $id_s = strval($id);
+        $ids = strval($id);
         // Creamos la ruta para almacenar los archivos
-        $ruta = '/containers/user_' . $id_s . '/';
+        $ruta = '/containers/user_' . $ids . '/';
         // Si no existe la ruta la creamos
         if (!Storage::exists($ruta)) {
             Storage::makeDirectory($ruta);
         }
 
-        $nombreArchivo = 'docker-compose-' . $id_s . '.yml';
+        $defaultNginxConf = '
+        server {
+            listen 80;
+            index index.php index.html;
+            error_log  /var/log/nginx/error.log;
+            access_log /var/log/nginx/access.log;
+            ## define root path
+            root /var/www/src;
+            ## define location php
+            location ~ \.php$ {
+                try_files $uri =404;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                fastcgi_pass app' . $ids . ':9000;
+                fastcgi_index index.php;
+                include fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                fastcgi_param PATH_INFO $fastcgi_path_info;
+            }
+            location / {
+                try_files $uri $uri/ /index.php?$query_string;
+                gzip_static on;
+            }
+        }
+        ';
+        Storage::put($ruta . "docker/nginx/conf.d/default.conf", $defaultNginxConf);
+
+        $nombreArchivo = 'docker-compose-' . $ids . '.yml';
 
         $dockerCompose = "version: '3.8'
 services:
 
     # PHP service
-    app:
+    app$ids:
       build: ../../docker/php
       image: php
       working_dir: /var/www/
@@ -100,12 +137,17 @@ services:
           limits:
             cpus: '0.05'
             memory: '200M'
+      labels:
+        - 'traefik.enable=true'
+        - 'traefik.http.routers.app$ids.rule=Host(`app$ids.localhost`)'
+        - 'traefik.http.routers.app$ids.entrypoints=web'
+        - 'traefik.http.services.app$ids.loadbalancer.server.port=80'
       restart: always
       networks:
         AnonByte:
 
     # MySQL database service
-    db:
+    db$ids:
       image: mysql:8.0
       deploy:
         resources:
@@ -114,19 +156,21 @@ services:
             memory: '1000M'
       labels:
         - 'traefik.enable=true'
-        - 'traefik.tcp.routers.db.rule=HostSNI(`*`)'
-        - 'traefik.tcp.routers.db.entrypoints=database'
-        - 'traefik.tcp.services.db.loadbalancer.server.port=3306'
+        - 'traefik.tcp.routers.db$ids.rule=HostSNI(`*`)'
+        - 'traefik.tcp.routers.db$ids.entrypoints=database'
+        - 'traefik.tcp.services.db$ids.loadbalancer.server.port=3306'
       environment:
         MYSQL_DATABASE: prueba
         MYSQL_USER: prueba
         MYSQL_PASSWORD: prueba
         MYSQL_ROOT_PASSWORD: prueba
+      volumes:
+        - './docker/mysql/:/var/lib/mysql'
       restart: always
       networks:
         AnonByte:
 
-    phpmyadmin:
+    phpmyadmin$ids:
       image: phpmyadmin/phpmyadmin
       deploy:
         resources:
@@ -135,9 +179,9 @@ services:
             memory: '200M'
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.phpmyadmin.rule=Host(`pma.localhost`)'
-        - 'traefik.http.routers.phpmyadmin.entrypoints=web'
-        - 'traefik.http.services.phpmyadmin.loadbalancer.server.port=8008'
+        - 'traefik.http.routers.phpmyadmin$ids.rule=Host(`pma$ids.localhost`)'
+        - 'traefik.http.routers.phpmyadmin$ids.entrypoints=web'
+        - 'traefik.http.services.phpmyadmin$ids.loadbalancer.server.port=80'
       environment:
         PMA_ARBITRARY: 1
       restart: always
@@ -145,7 +189,7 @@ services:
         AnonByte:
 
     # Nginx service
-    nginx:
+    nginx$ids:
       image: nginx:latest
       deploy:
         resources:
@@ -154,9 +198,12 @@ services:
             memory: '200M'
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.nginx.rule=Host(`nginx.localhost`)'
-        - 'traefik.http.routers.nginx.entrypoints=web'
-        - 'traefik.http.services.nginx.loadbalancer.server.port=80'
+        - 'traefik.http.routers.nginx$ids.rule=Host(`nginx$ids.localhost`)'
+        - 'traefik.http.routers.nginx$ids.entrypoints=web'
+        - 'traefik.http.services.nginx$ids.loadbalancer.server.port=80'
+      volumes:
+        - './docker/nginx/conf.d/default.conf'
+        - './log/nginx:/var/log/nginx/'
       restart: always
       networks:
         AnonByte:
@@ -216,8 +263,3 @@ networks:
         return $newArray;
     }
 }
-/*
-Como repetir una funcion:
-1. app/Console/Kernel.php
-2. protected function schedule(Schedule $schedule) { $schedule->call('docker-stats')->everyMinute(); }
- */

@@ -1,4 +1,0 @@
-FTP over TLS
-SSL con traefik
-Internet Monitoring
-Pi-hole y Traefik funcionando juntos

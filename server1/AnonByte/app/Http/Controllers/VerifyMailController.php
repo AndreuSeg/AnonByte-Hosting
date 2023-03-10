@@ -13,6 +13,6 @@ class VerifyMailController extends Controller
         $user->email_verified_at = now();
         $user->save();
 
-        return redirect()->route('login')->with('message', "Su correo ha sido verificado.");
+        return redirect()->route('auth.login')->with('message', "Su correo ha sido verificado.");
     }
 }

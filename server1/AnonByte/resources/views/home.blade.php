@@ -6,7 +6,7 @@
         <div class="info">
             <h1 class="text-2xl text-white">Pequeños detalles para hacer realidad<br><span class="text-3xl font-bold">Grandes
                     sueños</span></h1>
-            <a href="{{ route('signup') }}">
+            <a href="{{ route('auth.signup') }}">
                 <Button class="mt-2 text-white pl-10 pr-10 pt-2 pb-2 rounded">Empezar</Button>
             </a>
         </div>

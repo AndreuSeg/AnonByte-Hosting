@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class AdminController extends Controller
 {
+    // Funcion para mostrar la respuesta 404 en vez de el 405
+    public function show404()
+    {
+        return abort(404);
+    }
+
     public function viewForm()
     {
         return view('admin.login');
@@ -51,7 +59,7 @@ class AdminController extends Controller
         $user = User::find($id);
 
         return view('admin.form', [
-            'id' =>$id,
+            'id' => $id,
             'user' => $user,
         ]);
     }
@@ -66,15 +74,21 @@ class AdminController extends Controller
         return redirect()->route('admin.users.users-table');
     }
 
-    public function saveUser(Request $request, $id)
+    public function saveUser(EditUserRequest $request, $id)
     {
+        // Recuperamos los datos pasados por el formulario, y los validamos.
+        $request->validated();
+
         // Recuperamos el usuario
         $user = User::find($id);
+
         // Definimos los campos que editamos
         $user->name = $request->input('name');
         $user->lastname = $request->input('lastname');
         $user->username = $request->input('username');
         $user->email = $request->input('email');
+        $user->role_id = $request->input('role_id');
+        $user->stack_created = $request->input('stack_created');
         // Guardamos los cambios
         $user->save();
 
@@ -86,7 +100,7 @@ class AdminController extends Controller
     private function _filter($users)
     {
         // Paginamos y filtramos por o email
-        $data = User::where('name', 'like', $users . '%')->orWhere('email', 'like', $users . '%')->paginate(3);
+        $data = User::where('name', 'like', $users . '%')->orWhere('email', 'like', $users . '%')->paginate(8);
         $data->appends(['users' => $users]);
         return $data;
     }

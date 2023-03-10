@@ -4,11 +4,11 @@
 @section('main')
     <div class="log-in mt-40 w-full">
         <h1 class="text-4xl">Log In</h1>
-        <form class="log-in-form gap-3 pt-4" method="POST" action="{{ route('login') }}">
+        <form class="log-in-form gap-2 pt-4" method="POST" action="{{ route('auth.login') }}">
             @csrf
             <div class="textbox">
                 <label class="mt-2 ml-2" for="email">Email</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('email') is-invalid @enderror" type="email" name="email"
+                <input class="pt-1 pb-1 pl-2 rounded @error('email') is-invalid @enderror" type="email" name="email"
                     placeholder="Email">
 
                 @error('email')
@@ -19,7 +19,7 @@
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="password">Password</label>
-                <input id="pass2" class="pt-2 pb-2 pl-4 pr-4 rounded @error('password') is-invalid @enderror"
+                <input id="pass2" class="pt-1 pb-1 pl-2 rounded @error('password') is-invalid @enderror"
                     type="password" name="password" placeholder="Contraseña">
 
                 @error('password')
@@ -63,7 +63,7 @@
             <button class="log-in-button text-white p-3 rounded relative bottom-4" type="submit">Iniciar sesión</button>
         </form>
         <p class="text-center">¿Todavia no tienes cuenta?
-            <a class="no-unerline" href="{{ route('form-signup') }}"><br>
+            <a class="no-unerline" href="{{ route('auth.form-signup') }}"><br>
                 <b>Registrate</b>
             </a>
         </p>

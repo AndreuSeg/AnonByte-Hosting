@@ -8,7 +8,7 @@
     <ul class="menu-horizontal mr-4 gap-6">
         <li class="text-center text-base"><a href="{{ route('home') }}">Home</a></li>
         <li class="text-center text-base"><a href="{{ route('contact') }}">Contacto</a></li>
-        <li class="text-center text-base"><a href="{{ route('form-login') }}">Iniciar Sesión</a></li>
-        <li class="text-center text-base"><a href="{{ route('form-signup') }}">Registrase</a></li>
+        <li class="text-center text-base"><a href="{{ route('auth.form-login') }}">Iniciar Sesión</a></li>
+        <li class="text-center text-base"><a href="{{ route('auth.form-signup') }}">Registrase</a></li>
     </ul>
 </nav>

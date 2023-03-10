@@ -1,8 +1,8 @@
 @section('nav')
-    <nav>
-        <form action="{{ route('logout') }}" method="POST">
+    <nav class="navprincipal">
+        <form action="{{ route('auth.logout') }}" method="POST">
             @csrf
-            <button type="submit">Cerrar sesión</button>
+            <button class="p-2 rounded text-white" type="submit">Cerrar sesión</button>
         </form>
         <div class="filtros gap-4">
             <form action="">
@@ -11,7 +11,7 @@
                     placeholder="Filtrar por nombre o email">
             </form>
             <a href="{{ route('admin.users.users-table') }}">
-                <button class="borrar-filtros-button bg-slate-400 p-2 rounded text-white" type="submit">&#10007; Borrar
+                <button class="borrar-filtros-button p-2 rounded text-white" type="submit">&#10007; Borrar
                     filtros</button>
             </a>
         </div>

@@ -32,7 +32,7 @@ class LoginController extends Controller
             }
             return redirect()->route('dashboard-home');
         } elseif (Auth::attempt($input, $remember) && (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)) {
-            return redirect()->route('login-admin');
+            return redirect()->route('auth.login-admin');
         } else {
             session()->flash('error', ['message' => "Credenciales Incorrectas"]);
             return redirect()->back();

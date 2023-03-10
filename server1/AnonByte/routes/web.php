@@ -25,34 +25,41 @@ Route::redirect('/', '/home');
 Route::get('/home', [HomeController::class, 'viewHome'])->name('home');
 Route::get('/contact', [ContactController::class, 'viewForm'])->name('contact');
 
-Route::get('/signup', [SignupController::class, 'viewForm'])->name('form-signup');
-Route::post('/signup', [SignupController::class, 'signup'])->name('signup');
-
-Route::get('/login', [LoginController::class, 'viewForm'])->name('form-login');
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::prefix('/auth')->name('auth.')->group(function () {
+    // Sign Up
+    Route::get('/signup', [SignupController::class, 'viewForm'])->name('form-signup');
+    Route::post('/signup', [SignupController::class, 'signup'])->name('signup');
+    // Log In Users
+    Route::get('/login', [LoginController::class, 'viewForm'])->name('form-login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+    // Log Out
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    // Log In Admins
+    Route::get('/login-admin', [AdminController::class, 'viewForm'])->name('admin-form');
+    Route::post('/login-admin', [AdminController::class, 'login'])->name('login-admin');
+});
 
 Route::get('/verify-mail/{id}', [VerifyMailController::class, 'index'])->name('verify-mail');
 
-Route::middleware(['auth', 'user'])->group(function() {
+Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboard-home')->middleware(['stack']);
     Route::get('/dashboard/stats', [DashboardController::class, 'stats'])->name('dashboard.stats');
     Route::get('/sugests', [DashboardController::class, 'viewSugests'])->name('view-sugests');
-    Route::get('/create-stack', [DashboardController::class, 'viewStackForm'])->name('view-stack');
-    Route::post('/create-stack', [DashboardController::class, 'createStack'])->name('create-stack');
+    // Route::get('/create-stack', [DashboardController::class, 'viewStackForm'])->name('view-stack');
+    Route::get('/create-stack', [DashboardController::class, 'createStack'])->name('create-stack');
 });
 
-Route::get('/login-admin', [AdminController::class, 'viewForm'])->name('admin-form');
-Route::post('/login-admin', [AdminController::class, 'login'])->name('login-admin');
+Route::middleware(['admin'])->group(function () {
+    Route::prefix('/admin')->name('admin.')->group(function () {
 
-Route::middleware(['admin'])->group(function() {
-    Route::prefix('/admin')->name('admin.')->group(function() {
-
-        Route::prefix('/users')->name('users.')->group(function() {
+        Route::prefix('/users')->name('users.')->group(function () {
             Route::get('/', [AdminController::class, 'viewTable'])->name('users-table');
             Route::get('/edit/{id}', [AdminController::class, 'editUser'])->name('edit-user');
+            Route::get('/{id}', [AdminController::class, 'show404'])->name('show-404');
             Route::delete('/{id}', [AdminController::class, 'deleteUser'])->name('delete-user');
-            Route::match(['POST', 'PUT', 'PATCH'], '/{id?}', [AdminController::class, 'saveUser'])->name('save-user');
+            Route::patch('/{id?}', [AdminController::class, 'saveUser'])->name('save-user');
         });
     });
 });
+
+// TODO: Rellenar usuaris, roles, cambiar coses de panel de admins, forulari crear containers y db

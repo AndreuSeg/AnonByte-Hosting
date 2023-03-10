@@ -22,6 +22,7 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {{-- Jquery --}}
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 </body>
 
 </html>

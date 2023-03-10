@@ -4,11 +4,11 @@
 @section('main')
     <div class="sign-up mt-40 w-full">
         <h1 class="text-4xl">Sign Up</h1>
-        <form class="sign-up-form gap-3 p-4" method="POST" action="{{ route('signup') }}">
+        <form class="sign-up-form gap-2 p-4" method="POST" action="{{ route('auth.signup') }}">
             @csrf
             <div class="textbox">
                 <label class="mt-2 ml-2" for="username">Username</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('username') is-invalid @enderror" type="text"
+                <input class="pt-1 pb-1 pl-2 rounded @error('username') is-invalid @enderror" type="text"
                     name="username" placeholder="Nombre de usuario">
 
                 @error('username')
@@ -20,7 +20,7 @@
             <div class="fullname gap-3">
                 <div class="textbox">
                     <label class="mt-2 ml-2" for="name">Name</label>
-                    <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('name') is-invalid @enderror" type="text"
+                    <input class="pt-1 pb-1 pl-2 rounded @error('name') is-invalid @enderror" type="text"
                         name="name" placeholder="Nombre">
 
                     @error('name')
@@ -31,7 +31,7 @@
                 </div>
                 <div class="textbox">
                     <label class="mt-2 ml-2" for="lastname">Last Name</label>
-                    <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('lastname') is-invalid @enderror" type="text"
+                    <input class="pt-1 pb-1 pl-2 rounded @error('lastname') is-invalid @enderror" type="text"
                         name="lastname" placeholder="Apellidos">
 
                     @error('lastname')
@@ -43,7 +43,7 @@
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="email">Email</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('email') is-invalid @enderror" type="email"
+                <input class="pt-1 pb-1 pl-2 rounded @error('email') is-invalid @enderror" type="email"
                     name="email" placeholder="Email">
 
                 @error('email')
@@ -54,7 +54,7 @@
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="password">Password</label>
-                <input id="pass" class="pt-2 pb-2 pl-4 pr-4 rounded @error('password') is-invalid @enderror"
+                <input id="pass" class="pt-1 pb-1 pl-2 rounded @error('password') is-invalid @enderror"
                     type="password" name="password" placeholder="Contraseña">
 
                 @error('password')
@@ -89,7 +89,7 @@
             </div>
         </form>
         <p class="text-center">¿Estas registrado ya?
-            <a class="no-underline" href="{{ route('form-login') }}"><br>
+            <a class="no-underline" href="{{ route('auth.form-login') }}"><br>
                 <b>Accede a tu cuenta</b>
             </a>
         </p>

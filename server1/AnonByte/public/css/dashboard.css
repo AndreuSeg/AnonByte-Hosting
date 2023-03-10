@@ -204,16 +204,25 @@ aside form:hover {
 
 .dashboard {
     display: grid;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: min-content;
+}
+
+.dashboard .info-containers {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 50px;
 }
 
 .dashboard .stats {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
 .dashboard .stats table {
+    width: 100%;
     border-style: solid;
     border-color: rgb(100 116 139);
     border-width: 2px;
@@ -257,20 +266,6 @@ aside form:hover {
 }
 
 /* End dashboard */
-
-/* FOOTER */
-
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-    height: 50px;
-    background-color: rgb(44, 40, 40);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 @media screen and (max-width: 1050px) {
     .stack-form {

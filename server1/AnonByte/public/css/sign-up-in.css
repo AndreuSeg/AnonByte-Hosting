@@ -72,25 +72,25 @@
 .eyeclosed {
     position: relative;
     left: 96.5%;
-    bottom: 35px;
+    bottom: 30px;
 }
 
 .eye {
     position: relative;
     left: 96.5%;
-    bottom: 35px;
+    bottom: 30px;
     display: none;
 }
 
 .eyeclosed2 {
     position: relative;
     left: 93%;
-    bottom: 34px;
+    bottom: 31px;
 }
 
 .eye2 {
     position: relative;
     left: 93%;
-    bottom: 34px;
+    bottom: 31px;
     display: none;
 }

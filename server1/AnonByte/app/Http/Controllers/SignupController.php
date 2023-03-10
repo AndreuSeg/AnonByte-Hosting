@@ -59,7 +59,7 @@ class SignupController extends Controller
         // Enviamos un email para verificar
         Mail::to($email)->send(new VerifyMail($id));
 
-        return redirect()->route('login');
+        return redirect()->route('auth.login');
     }
 
     private function _safePassword($password)

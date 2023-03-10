@@ -4,11 +4,11 @@
 @section('main')
     <div class="log-in-admin pt-40 w-full">
         <h2 class="text-4xl">Log In Admin</h2>
-        <form class="log-in-form gap-3 p-4" method="POST" action="{{ route('login-admin') }}">
+        <form class="log-in-form gap-2 p-4" method="POST" action="{{ route('auth.login-admin') }}">
             @csrf
             <div class="textbox">
                 <label class="mt-2 ml-2" for="email">Email</label>
-                <input class="pt-2 pb-2 pl-4 pr-4 rounded @error('email') is-invalid @enderror" type="email" name="email"
+                <input class="pt-1 pb-1 pl-2 rounded @error('email') is-invalid @enderror" type="email" name="email"
                     placeholder="Email">
 
                 @error('email')
@@ -19,7 +19,7 @@
             </div>
             <div class="textbox">
                 <label class="mt-2 ml-2" for="password">Password</label>
-                <input id="pass2" class="pt-2 pb-2 pl-4 pr-4 rounded @error('password') is-invalid @enderror"
+                <input id="pass2" class="pt-1 pb-1 pl-2 rounded @error('password') is-invalid @enderror"
                     type="password" name="password" placeholder="Contraseña">
 
                 @error('password')
