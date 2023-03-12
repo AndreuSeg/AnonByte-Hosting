@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="{{ asset('css/nav.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sign-up-in.css') }}">
     <link rel="icon" href="{{ asset('images/logo.png') }}">
-    @vite('resources/css/app.css')
+    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- @vite('resources/css/app.css') --}}
     <title>{{ env('APP_NAME') }} | @yield('tittle', 'Default')</title>
 </head>
 
