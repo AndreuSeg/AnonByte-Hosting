@@ -16,8 +16,7 @@ class DashboardController extends Controller
         // Lo pasamos a str
         $ids = strval($id);
         $ids = "_" . $ids . "_";
-        $output = shell_exec("docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemPerc}}\t{{.MemUsage}}\t{{.NetIO}}'
-        $(docker ps --format '{{.ID}} {{.Names}}' | grep '$ids' | awk '{print $1}')");
+        $output = shell_exec("docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemPerc}}\t{{.MemUsage}}\t{{.NetIO}}' $(docker ps --format '{{.ID}} {{.Names}}' | grep '$ids' | awk '{print $1}')");
         $rows = explode("\n", trim($output));
 
         // Verifica si el número de elementos en el array es diferente de 5.
@@ -25,40 +24,38 @@ class DashboardController extends Controller
             // Si el número de elementos es diferente de 5, devuelve un mensaje de error.
             $result = "No tienes contenedores encendidos";
         } else {
-            // Si el número de elementos es igual a 5, inicia el buffer de salida.
-            ob_start(); // Inicia el buffer de salida.
-
-            // Empieza a generar la tabla HTML.
+            ob_start(); // Inicia el buffer de salida
             echo "<table>";
             $isHeader = true;
             foreach ($rows as $index => $row) {
-                // Divide la cadena de caracteres en elementos más pequeños, utilizando un espacio como separador.
                 $row = explode(" ", $row);
-                // Elimina los elementos vacíos del array.
                 $row = array_filter($row, function ($valor) {
                     return !empty($valor);
                 });
 
-                // Llama a una función privada para reordenar los índices del array.
+                // Ejecutamos la funcion privada para ordenar los indices del array.
                 $reorderedArray = $this->_reorderArrayIndexes($row);
                 $newArray = [];
 
-                // Si es la primera fila de la tabla (encabezado), llama a una función privada para ordenar los elementos.
+                // Agregar los elementos según el orden especificado
                 if ($index == 0) {
                     $newArray = $this->_element0($reorderedArray);
-                    // Empieza el encabezado de la tabla HTML.
                     echo "<thead><tr>";
                     foreach ($newArray as $item) {
-                        // Agrega cada elemento al encabezado de la tabla HTML.
+                        echo "<td>$item</td>";
+                    }
+                    echo "</tr></thead><tbody>";
+                } else {
+                    $newArray = $this->_otherElements($reorderedArray);
+                    echo "<tr>";
+                    foreach ($newArray as $item) {
                         echo "<td>$item</td>";
                     }
                     echo "</tr>";
                 }
             }
-            // Cerramos la tabla
             echo "</tbody></table>";
-            // Obtiene y limpia el contenido del buffer de salida
-            $result = ob_get_clean();
+            $result = ob_get_clean(); // Obtiene y limpia el contenido del buffer de salida
         }
         return $result;
     }
