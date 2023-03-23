@@ -28,7 +28,7 @@ class LoginController extends Controller
             }
 
             if (Auth::user()->stack_created == false) {
-                return redirect()->route('view-sugests');
+                return redirect()->route('view-stack');
             }
             return redirect()->route('dashboard-home');
         } elseif (Auth::attempt($input, $remember) && (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)) {

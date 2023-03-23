@@ -21,7 +21,7 @@ class stackMiddleware
             return $next($request);
         }
         elseif (Auth::user() && Auth::user()->stack_created == false) {
-            return redirect()->route('view-sugests');
+            return redirect()->route('view-stack');
         }
     }
 }

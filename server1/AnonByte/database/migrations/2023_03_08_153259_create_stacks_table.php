@@ -14,15 +14,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('containers', function (Blueprint $table) {
+        Schema::create('stacks', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->string('container_name');
-            $table->enum('type', ['nginx','mysql','phpmyadmin','php']);
-            $table->string('mysql_database')->nullable();
-            $table->string('mysql_user')->nullable();
-            $table->string('mysql_password')->nullable();
-            $table->string('mysql_root_password')->nullable();
+            $table->string('stack_name')->unique();
+            $table->string('mysql_database');
+            $table->string('mysql_user');
+            $table->string('mysql_password');
+            $table->string('mysql_root_password');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -35,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('containers');
+        Schema::dropIfExists('stacks');
     }
 };

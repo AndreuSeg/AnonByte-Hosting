@@ -8,76 +8,22 @@
 
 /* CREAR STACK */
 
-.explicacion {
-    display: flex;
-    flex-direction: column;
-}
-
-.explicacion .consejos {
-    display: flex;
-    flex-direction: column;
-}
-
-.explicacion .consejos .consejo {
-    display: flex;
-    flex-direction: column;
-}
-
-.explicacion .consejos .consejo h3 ul {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-top: 5px;
-}
-
-.explicacion .consejos .consejo h3 ul li {
-    list-style: disc;
-}
-
-.explicacion button {
-    background-color: var(--buttons);
-    cursor: pointer;
-    border: none;
-}
-
-.explicacion button:hover {
-    opacity: 80%;
-}
-
-.stack-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.stack-form form {
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.stack-form h1 {
-    font-size: 2rem;
-}
-
-.stack-form form .container {
-    background-color: bisque;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    width: 50%;
-    max-width: 500px;
-}
-
-.stack-form form .container .textbox {
+form .textbox {
     display: flex;
     flex-direction: column;
 }
 
-.stack-form form .container .textbox label {
+form .textbox label {
     zoom: 120%;
 }
 
-.stack-form form .container .textbox input {
+form .textbox input {
     zoom: 120%;
     background-color: var(--light_blue);
     border: none;
@@ -85,36 +31,32 @@
     transition: background-color 0.2s, box-shadow 0.2s;
 }
 
-.stack-form form .container .textbox input:focus {
+form .textbox input.file_nginx {
+    zoom: 100%;
+}
+
+form .textbox input:focus {
     opacity: 85%;
     box-shadow: 0 0 0.5rem var(--blue);
     border: none;
 }
 
-.stack-form form .container .textbox input::placeholder {
+form .textbox input::placeholder {
     color: white;
 }
 
-.stack-form form .container .serverweb {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stack-form form .container .mysql {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stack-form form button{
+form button.stack-button {
     background-color: var(--buttons);
     cursor: pointer;
     border: none;
 }
 
-.stack-form form button:hover {
+form button.stack-button {
     opacity: 80%;
+}
+
+.invalid-feedback {
+    padding-left: 1rem;
 }
 
 /* START NAV */

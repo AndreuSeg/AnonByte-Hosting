@@ -44,9 +44,8 @@ Route::get('/verify-mail/{id}', [VerifyMailController::class, 'index'])->name('v
 Route::middleware(['auth', 'user'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'view'])->name('dashboard-home')->middleware(['stack']);
     Route::get('/dashboard/stats', [DashboardController::class, 'stats'])->name('dashboard.stats');
-    Route::get('/sugests', [DashboardController::class, 'viewSugests'])->name('view-sugests');
-    // Route::get('/create-stack', [DashboardController::class, 'viewStackForm'])->name('view-stack');
-    Route::get('/create-stack', [DashboardController::class, 'createStack'])->name('create-stack');
+    Route::get('/create-stack', [DashboardController::class, 'viewStackForm'])->name('view-stack');
+    Route::post('/create-stack', [DashboardController::class, 'createStack'])->name('create-stack');
 });
 
 Route::middleware(['admin'])->group(function () {

@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StackRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Stack;
+use Illuminate\Support\Carbon;
+use ZipArchive;
 
 class DashboardController extends Controller
 {
@@ -70,62 +75,80 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function viewSugests()
-    {
-        return view('dashboard.sugests');
-    }
-
     public function viewStackForm()
     {
         return view('dashboard.createstack');
     }
 
-    public function createStack()
+    public function createStack(StackRequest $request)
     {
+        $request->validated();
+
+        $appname = $request->input('app_name');
+        $dbname = $request->input('db_name');
+        $dbuser = $request->input('db_user');
+        $dbpass = $request->input('db_pass');
+        $dbrootpass = $request->input('db_root_pass');
+
+        // Recupera el archivo enviado
+        $file = $request->file('file');
+
         // Recuperamos el ID del usuario
         $id = (Auth::id());
         // Lo pasamos a str
         $ids = strval($id);
         // Creamos la ruta para almacenar los archivos
         $ruta = '/containers/user_' . $ids . '/';
+
         // Si no existe la ruta la creamos
         if (!Storage::exists($ruta)) {
             Storage::makeDirectory($ruta);
         }
 
-        $defaultNginxConf = '
-        server {
-            listen 80;
-            index index.php index.html;
-            error_log  /var/log/nginx/error.log;
-            access_log /var/log/nginx/access.log;
-            ## define root path
-            root /var/www/src;
-            ## define location php
-            location ~ \.php$ {
-                try_files $uri =404;
-                fastcgi_split_path_info ^(.+\.php)(/.+)$;
-                fastcgi_pass app' . $ids . ':9000;
-                fastcgi_index index.php;
-                include fastcgi_params;
-                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-                fastcgi_param PATH_INFO $fastcgi_path_info;
-            }
-            location / {
-                try_files $uri $uri/ /index.php?$query_string;
-                gzip_static on;
-            }
-        }
-        ';
+        // Guarda el archivo en la ruta creada
+        $file->storeAs($ruta, 'user_' . $ids . '.zip');
+
+        // Creamos la segunda ruta
+        $ruta2 = $ruta . 'src/';
+        Storage::makeDirectory($ruta2);
+
+        // Y nos movemos a la ruta deseada
+        chdir('../storage/app/' . $ruta);
+        // Unzipeamos el zip del usuario
+        system('unzip user_' . $ids . '.zip -d src/');
+
+        $defaultNginxConf = 'server {
+    listen 80;
+    index index.php index.html;
+    error_log  /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+    ## define root path
+    root /var/www/src;
+    ## define location php
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass app' . $appname . ':9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+        gzip_static on;
+    }
+}';
         Storage::put($ruta . "docker/nginx/conf.d/default.conf", $defaultNginxConf);
 
         $nombreArchivo = 'docker-compose-' . $ids . '.yml';
 
-        $dockerCompose = "version: '3.8'
+        $dockerCompose = "version: '3'
 services:
 
     # PHP service
-    app$ids:
+    app$appname:
+      container_name: PHP-$appname
       build: ../../docker/php
       image: php
       working_dir: /var/www/
@@ -136,38 +159,42 @@ services:
             memory: '200M'
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.app$ids.rule=Host(`app$ids.localhost`)'
-        - 'traefik.http.routers.app$ids.entrypoints=web'
-        - 'traefik.http.services.app$ids.loadbalancer.server.port=80'
+        - 'traefik.http.routers.app$appname.rule=Host(`php$appname.localhost`)'
+        - 'traefik.http.routers.app$appname.entrypoints=web'
+        - 'traefik.http.services.app$appname.loadbalancer.server.port=80'
+      volumes:
+        - './src:/var/www/src'
       restart: always
       networks:
         AnonByte:
 
     # MySQL database service
-    db$ids:
+    db$appname:
+      container_name: Mysql-$appname
       image: mysql:8.0
       deploy:
         resources:
           limits:
             cpus: '0.10'
-            memory: '1000M'
+            memory: '800M'
       labels:
         - 'traefik.enable=true'
-        - 'traefik.tcp.routers.db$ids.rule=HostSNI(`*`)'
-        - 'traefik.tcp.routers.db$ids.entrypoints=database'
-        - 'traefik.tcp.services.db$ids.loadbalancer.server.port=3306'
+        - 'traefik.tcp.routers.db$appname.rule=HostSNI(`*`)'
+        - 'traefik.tcp.routers.db$appname.entrypoints=database'
+        - 'traefik.tcp.services.db$appname.loadbalancer.server.port=3306'
       environment:
-        MYSQL_DATABASE: prueba
-        MYSQL_USER: prueba
-        MYSQL_PASSWORD: prueba
-        MYSQL_ROOT_PASSWORD: prueba
+        MYSQL_DATABASE: $dbname
+        MYSQL_USER: $dbuser
+        MYSQL_PASSWORD: $dbpass
+        MYSQL_ROOT_PASSWORD: $dbrootpass
       volumes:
         - './docker/mysql/:/var/lib/mysql'
       restart: always
       networks:
         AnonByte:
 
-    phpmyadmin$ids:
+    phpmyadmin$appname:
+      container_name: PhpMyAdmin-$appname
       image: phpmyadmin/phpmyadmin
       deploy:
         resources:
@@ -176,9 +203,9 @@ services:
             memory: '200M'
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.phpmyadmin$ids.rule=Host(`pma$ids.localhost`)'
-        - 'traefik.http.routers.phpmyadmin$ids.entrypoints=web'
-        - 'traefik.http.services.phpmyadmin$ids.loadbalancer.server.port=80'
+        - 'traefik.http.routers.phpmyadmin$appname.rule=Host(`pma$appname.localhost`)'
+        - 'traefik.http.routers.phpmyadmin$appname.entrypoints=web'
+        - 'traefik.http.services.phpmyadmin$appname.loadbalancer.server.port=80'
       environment:
         PMA_ARBITRARY: 1
       restart: always
@@ -186,7 +213,8 @@ services:
         AnonByte:
 
     # Nginx service
-    nginx$ids:
+    nginx$appname:
+      container_name: Nginx-$appname
       image: nginx:latest
       deploy:
         resources:
@@ -195,12 +223,13 @@ services:
             memory: '200M'
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.nginx$ids.rule=Host(`nginx$ids.localhost`)'
-        - 'traefik.http.routers.nginx$ids.entrypoints=web'
-        - 'traefik.http.services.nginx$ids.loadbalancer.server.port=80'
+        - 'traefik.http.routers.nginx$appname.rule=Host(`$appname.localhost`)'
+        - 'traefik.http.routers.nginx$appname.entrypoints=web'
+        - 'traefik.http.services.nginx$appname.loadbalancer.server.port=80'
       volumes:
-        - './docker/nginx/conf.d/default.conf'
-        - './log/nginx:/var/log/nginx/'
+        - './src:/var/www/src'
+        - './docker/nginx/conf.d:/etc/nginx/conf.d'
+        - './log/nginx:/var/log/nginx'
       restart: always
       networks:
         AnonByte:
@@ -211,15 +240,28 @@ networks:
         ";
         // Almacenamos el docker-compose
         Storage::put("$ruta$nombreArchivo", $dockerCompose);
-        // Recuperamos la ruta donde estamos
-        getcwd();
-        // Nos movemos a la ruta deseada
-        chdir('../storage/app/' . $ruta);
         // Ejecutamos el comando para arrancar los contenedores
         shell_exec('docker-compose -f ' . $nombreArchivo . ' up -d');
+
         $user = User::find($id);
         $user->stack_created = true;
         $user->save();
+
+        $dbpass = $this->_safePassword($dbpass);
+        $dbrootpass = $this->_safePassword($dbrootpass);
+
+        Stack::create([
+            'user_id' => $id,
+            'stack_name' => $appname,
+            'mysql_database' => $dbname,
+            'mysql_user' => $dbuser,
+            'mysql_password' => $dbpass,
+            'mysql_root_password' => $dbrootpass,
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
+            'deleted_At' => null,
+        ]);
+
         return redirect()->route('dashboard-home');
     }
 
@@ -258,5 +300,11 @@ networks:
         $newArray[4] = $row[6] . " " . $row[7] . " " . $row[8];
 
         return $newArray;
+    }
+
+    private function _safePassword($password)
+    {
+        $password = Hash::make($password);
+        return $password;
     }
 }
