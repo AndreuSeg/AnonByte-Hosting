@@ -25,7 +25,7 @@
             <form class="ml-8 gap-3" action="{{ route('logout') }}" method="post">
                 @csrf
                 <i class="bi bi-box-arrow-right"></i>
-                <button>Log Out<br><span class="text-blue-500">{{ $username }}</span></button>
+                <button>Log Out</button>
             </form>
         </div>
     </aside>

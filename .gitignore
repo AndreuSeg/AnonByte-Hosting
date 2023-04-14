@@ -1,9 +1,5 @@
 /.vscode
 
-# Mysql
-/server2/traefik/mysql/mysql-anonbyte
-/server2/traefik/mysql/.env
-
 # Pi-Hole
 /server2/pi-hole/etc-pihole
 /server2/pi-hole/etc-dnsmasq.d

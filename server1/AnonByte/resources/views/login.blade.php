@@ -58,7 +58,7 @@
             @endif
             <div class="flex flex-row relative bottom-4">
                 <input class="ml-2" type="checkbox" name="remember" />
-                <label class="ml-2" for="remember">Remeber me</label>
+                <label class="ml-2" for="remember">Remember me</label>
             </div>
             <button class="log-in-button text-white p-3 rounded relative bottom-4" type="submit">Iniciar sesión</button>
         </form>
