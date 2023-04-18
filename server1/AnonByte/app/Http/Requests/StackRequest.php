@@ -25,11 +25,9 @@ class StackRequest extends FormRequest
     {
         return [
             'app_name' => 'required|unique:stacks,stack_name',
-            'db_name' => 'required',
             'db_user' => 'required',
             'db_pass' => 'required|min:8',
             'db_root_pass' => 'required|min:8',
-            'file' => 'required|file|mimes:zip',
         ];
     }
 }

@@ -3,7 +3,7 @@
 
 @section('main')
     <div class="container">
-        <form class="gap-2 pt-4 w-full" method="POST" action="{{ route('create-stack') }}" enctype="multipart/form-data">
+        <form class="gap-2 pt-4 w-full" method="POST" action="{{ route('create-stack') }}">
             @csrf
             <div class="app">
                 <h3 class="text-4xl text-center">App</h3>
@@ -21,14 +21,6 @@
             <div class="mysql">
                 <h3 class="text-4xl text-center">Mysql</h3>
                 <div class="textbox">
-                    <label class="mt-2 ml-2" for="db_name">Nombre de la DB</label>
-                    <input class="pt-1 pb-1 pl-2 rounded @error('db_name') is-invalid @enderror" type="text" name="db_name" placeholder="Nombre de la BD">
-
-                    @error('db_name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
 
                     <label class="mt-2 ml-2" for="db_user">Usuario MYSQL</label>
                     <input class="pt-1 pb-1 pl-2 rounded @error('db_user') is-invalid @enderror" type="text" name="db_user" placeholder="Usuario MYSQL">
@@ -52,19 +44,6 @@
                     <input class="pt-1 pb-1 pl-2 rounded @error('db_root_pass') is-invalid @enderror" type="password" name="db_root_pass" placeholder="Contraseña root MYSQL">
 
                     @error('db_root_pass')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <div class="nginx">
-                <h3 class="text-4xl text-center">Nginx</h3>
-                <div class="textbox">
-                    <label class="mt-2 ml-2" for="file">Archivo ZIP</label>
-                    <input class="file_nginx pt-1 pb-1 pl-2 rounded @error('file') is-invalid @enderror" type="file" name="file">
-
-                    @error('file')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

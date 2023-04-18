@@ -18,13 +18,10 @@
                     <i class="bi bi-box-fill"></i>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="">
-                    <i class="bi bi-folder"></i>
-                    <h3>File Manager</h3>
                 </a>
                 <a href="">
-                    <i class="bi bi-app-indicator"></i>
-                    <h3>Web Page</h3>
+                    <i class="bi bi-clipboard2-data-fill"></i>
+                    <h3>Logs</h3>
                 </a>
                 <form class="ml-8 gap-3" action="{{ route('auth.logout') }}" method="post">
                     @csrf
@@ -36,18 +33,8 @@
         <main>
             <h1 class="text-3xl font-extrabold pt-8 pl-8">Dashboard</h1>
             <div class="dashboard gap-4 mt-20 ml-20">
-                <div class="info-containers w-full bg-white">
-                    <button id="regargarStats">Recargar Stats</button>
-                    <button id="verLogs">Ver Logs</button>
-                </div>
                 <div class="stats">
                     {!! $stats !!}
-                </div>
-                <div class="other_staff gap-4">
-                    <div class="cont files">
-                    </div>
-                    <div class="cont web">
-                    </div>
                 </div>
             </div>
         </main>

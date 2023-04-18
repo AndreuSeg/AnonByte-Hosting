@@ -141,10 +141,6 @@
                     <p>Dominio Personalizado</p>
                 </div>
                 <div class="cel">
-                    <img src="{{ asset('images/mysql.png') }}" alt="mysql">
-                    <p>Base de Datos MYSQL</p>
-                </div>
-                <div class="cel">
                     <img src="{{ asset('images/backup.png') }}" alt="backup">
                     <p>Copias de Seguridad Periódicas</p>
                 </div>
@@ -155,16 +151,12 @@
             </div>
             <div class="col2">
                 <div class="cel">
-                    <img src="{{ asset('images/loadbalancing.png') }}" alt="loadbalancing">
-                    <p>Load Balancers</p>
-                </div>
-                <div class="cel">
                     <img src="{{ asset('images/config.png') }}" alt="config">
                     <p>Configuracion Fácil</p>
                 </div>
                 <div class="cel">
-                    <img src="{{ asset('images/files.png') }}" alt="files">
-                    <p>Explorador de Archivos</p>
+                    <img src="{{ asset('images/mysql.png') }}" alt="mysql">
+                    <p>Base de Datos MYSQL</p>
                 </div>
                 <div class="cel">
                     <img src="{{ asset('images/logs.png') }}" alt="logs">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StackRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -83,18 +84,17 @@ class DashboardController extends Controller
         $request->validated();
 
         $appname = $request->input('app_name');
-        $dbname = $request->input('db_name');
+        $dbname = 'wordpress';
         $dbuser = $request->input('db_user');
         $dbpass = $request->input('db_pass');
         $dbrootpass = $request->input('db_root_pass');
-
-        // Recupera el archivo enviado
-        $file = $request->file('file');
 
         // Recuperamos el ID del usuario
         $id = (Auth::id());
         // Lo pasamos a str
         $ids = strval($id);
+
+        $idConts = '_' . $ids . '_';
         // Creamos la ruta para almacenar los archivos
         $ruta = '/containers/user_' . $ids . '/';
 
@@ -103,38 +103,51 @@ class DashboardController extends Controller
             Storage::makeDirectory($ruta);
         }
 
-        // Guarda el archivo en la ruta creada
-        $file->storeAs($ruta, 'user_' . $ids . '.zip');
-
         // Creamos la segunda ruta
-        $ruta2 = $ruta . 'src/';
+        $ruta2 = $ruta . 'wordpress/';
         Storage::makeDirectory($ruta2);
 
         // Y nos movemos a la ruta deseada
         chdir('../storage/app/' . $ruta);
-        // Unzipeamos el zip del usuario
-        system('unzip user_' . $ids . '.zip -d src/');
 
         $defaultNginxConf = 'server {
     listen 80;
     index index.php index.html;
     error_log  /var/log/nginx/error.log;
     access_log /var/log/nginx/access.log;
+
     ## define root path
-    root /var/www/src;
+    root /var/www/html;
+
     ## define location php
     location ~ \.php$ {
-        try_files $uri =404;
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass app' . $appname . ':9000;
+        # Pasar las solicitudes PHP a PHP-FPM
+        fastcgi_pass wordpress' . $idConts . ':9000;
         fastcgi_index index.php;
-        include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param PATH_INFO $fastcgi_path_info;
+        include fastcgi_params;
     }
+
+    # Configuración para archivos estáticos
     location / {
-        try_files $uri $uri/ /index.php?$query_string;
-        gzip_static on;
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location = /favicon.ico {
+        log_not_found off; access_log off;
+    }
+
+    location = /robots.txt {
+        log_not_found off; access_log off; allow all;
+    }
+
+    location ~* \.(css|gif|ico|jpeg|jpg|js|png)$ {
+        expires max;
+        log_not_found off;
     }
 }';
         Storage::put($ruta . "docker/nginx/conf.d/default.conf", $defaultNginxConf);
@@ -145,31 +158,36 @@ class DashboardController extends Controller
 services:
 
     # PHP service
-    app$appname:
-      container_name: PHP-$appname
-      build: ../../docker/php
-      image: php
-      working_dir: /var/www/
+    wordpress$appname:
+      container_name: Wordpress$idConts
+      image: wordpress:latest
       deploy:
         resources:
           limits:
-            cpus: '0.05'
+            cpus: '0.01'
             memory: '200M'
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.app$appname.rule=Host(`php$appname.localhost`)'
-        - 'traefik.http.routers.app$appname.entrypoints=web'
-        - 'traefik.http.services.app$appname.loadbalancer.server.port=80'
+        - 'traefik.http.routers.wordpress$appname.rule=Host(`wordpress$appname.localhost`)'
+        - 'traefik.http.routers.wordpress$appname.entrypoints=web'
+        - 'traefik.http.services.wordpress$appname.loadbalancer.server.port=80'
+      environment:
+        - WORDPRESS_DB_HOST=db$appname:3306
+        - WORDPRESS_DB_USER=$dbuser
+        - WORDPRESS_DB_PASSWORD=$dbpass
+        - WORDPRESS_DB_NAME=$dbname
+      depends_on:
+        - db$appname
       volumes:
-        - './src:/var/www/src'
+        - './wordpress:/var/www/html'
       restart: always
       networks:
         AnonByte:
 
     # MySQL database service
     db$appname:
-      container_name: Mysql-$appname
-      image: mysql:8.0
+      container_name: Mysql$idConts
+      image: mysql:latest
       deploy:
         resources:
           limits:
@@ -192,12 +210,12 @@ services:
         AnonByte:
 
     phpmyadmin$appname:
-      container_name: PhpMyAdmin-$appname
+      container_name: PhpMyAdmin$idConts
       image: phpmyadmin/phpmyadmin
       deploy:
         resources:
           limits:
-            cpus: '0.05'
+            cpus: '0.01'
             memory: '200M'
       labels:
         - 'traefik.enable=true'
@@ -206,18 +224,20 @@ services:
         - 'traefik.http.services.phpmyadmin$appname.loadbalancer.server.port=80'
       environment:
         PMA_ARBITRARY: 1
+      depends_on:
+        - db$appname
       restart: always
       networks:
         AnonByte:
 
     # Nginx service
     nginx$appname:
-      container_name: Nginx-$appname
+      container_name: Nginx$idConts
       image: nginx:latest
       deploy:
         resources:
           limits:
-            cpus: '0.05'
+            cpus: '0.01'
             memory: '200M'
       labels:
         - 'traefik.enable=true'
@@ -225,9 +245,11 @@ services:
         - 'traefik.http.routers.nginx$appname.entrypoints=web'
         - 'traefik.http.services.nginx$appname.loadbalancer.server.port=80'
       volumes:
-        - './src:/var/www/src'
+        - './wordpress:/var/www/html'
         - './docker/nginx/conf.d:/etc/nginx/conf.d'
         - './log/nginx:/var/log/nginx'
+      depends_on:
+        - wordpress$appname
       restart: always
       networks:
         AnonByte:
@@ -236,6 +258,11 @@ networks:
   AnonByte:
     external: true
         ";
+
+        /*
+          Diferenciar domini de nom de app.
+         */
+
         // Almacenamos el docker-compose
         Storage::put("$ruta$nombreArchivo", $dockerCompose);
         // Ejecutamos el comando para arrancar los contenedores

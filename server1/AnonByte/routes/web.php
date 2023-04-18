@@ -60,5 +60,3 @@ Route::middleware(['admin'])->group(function () {
         });
     });
 });
-
-// TODO: Rellenar usuaris, roles, cambiar coses de panel de admins, forulari crear containers y db
