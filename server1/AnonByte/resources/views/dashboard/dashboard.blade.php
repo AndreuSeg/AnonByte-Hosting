@@ -14,14 +14,14 @@
                 </div>
             </div>
             <div class="sidebar">
-                <a class="active" href="">
-                    <i class="bi bi-box-fill"></i>
+                <a class="active">
+                    <i class="bi bi-bar-chart-fill"></i>
                     <h3>Dashboard</h3>
                 </a>
                 </a>
-                <a href="">
-                    <i class="bi bi-clipboard2-data-fill"></i>
-                    <h3>Logs</h3>
+                <a href="{{ route('dashboard-info') }}">
+                    <i class="bi bi-info-circle-fill"></i>
+                    <h3>Info</h3>
                 </a>
                 <form class="ml-8 gap-3" action="{{ route('auth.logout') }}" method="post">
                     @csrf

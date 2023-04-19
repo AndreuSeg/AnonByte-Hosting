@@ -24,8 +24,8 @@ class DashboardController extends Controller
         $rows = explode("\n", trim($output));
 
         // Verifica si el número de elementos en el array es diferente de 5.
-        if (count($rows) != 5) {
-            // Si el número de elementos es diferente de 5, devuelve un mensaje de error.
+        if (count($rows) != 4) {
+            // Si el número de elementos es diferente de 4, devuelve un mensaje de error.
             $result = "No tienes contenedores encendidos";
         } else {
             ob_start(); // Inicia el buffer de salida
@@ -64,13 +64,26 @@ class DashboardController extends Controller
         return $result;
     }
 
-    public function view()
+    public function viewDash()
     {
         $username = auth()->user()->username;
         $stats = $this->stats();
-        return view('dashboard.home', [
+
+        return view('dashboard.dashboard', [
             'username' => $username,
             'stats' => $stats,
+        ]);
+    }
+
+    public function viewInfo()
+    {
+        $username = auth()->user()->username;
+        $id = Auth::id();
+        $stack = Stack::where('user_id', $id)->first();
+        $appname = $stack->stack_name;
+        return view('dashboard.info', [
+            'username' => $username,
+            'appname' => $appname,
         ]);
     }
 
@@ -109,48 +122,6 @@ class DashboardController extends Controller
 
         // Y nos movemos a la ruta deseada
         chdir('../storage/app/' . $ruta);
-
-        $defaultNginxConf = 'server {
-    listen 80;
-    index index.php index.html;
-    error_log  /var/log/nginx/error.log;
-    access_log /var/log/nginx/access.log;
-
-    ## define root path
-    root /var/www/html;
-
-    ## define location php
-    location ~ \.php$ {
-        # Pasar las solicitudes PHP a PHP-FPM
-        fastcgi_pass wordpress' . $idConts . ':9000;
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-
-    # Configuración para archivos estáticos
-    location / {
-        try_files $uri $uri/ /index.php?$args;
-    }
-
-    location ~ /\.ht {
-        deny all;
-    }
-
-    location = /favicon.ico {
-        log_not_found off; access_log off;
-    }
-
-    location = /robots.txt {
-        log_not_found off; access_log off; allow all;
-    }
-
-    location ~* \.(css|gif|ico|jpeg|jpg|js|png)$ {
-        expires max;
-        log_not_found off;
-    }
-}';
-        Storage::put($ruta . "docker/nginx/conf.d/default.conf", $defaultNginxConf);
 
         $nombreArchivo = 'docker-compose-' . $ids . '.yml';
 
@@ -230,34 +201,10 @@ services:
       networks:
         AnonByte:
 
-    # Nginx service
-    nginx$appname:
-      container_name: Nginx$idConts
-      image: nginx:latest
-      deploy:
-        resources:
-          limits:
-            cpus: '0.01'
-            memory: '200M'
-      labels:
-        - 'traefik.enable=true'
-        - 'traefik.http.routers.nginx$appname.rule=Host(`$appname.localhost`)'
-        - 'traefik.http.routers.nginx$appname.entrypoints=web'
-        - 'traefik.http.services.nginx$appname.loadbalancer.server.port=80'
-      volumes:
-        - './wordpress:/var/www/html'
-        - './docker/nginx/conf.d:/etc/nginx/conf.d'
-        - './log/nginx:/var/log/nginx'
-      depends_on:
-        - wordpress$appname
-      restart: always
-      networks:
-        AnonByte:
-
 networks:
   AnonByte:
     external: true
-        ";
+";
 
         /*
           Diferenciar domini de nom de app.
