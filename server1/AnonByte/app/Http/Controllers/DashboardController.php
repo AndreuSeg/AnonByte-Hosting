@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StackRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,8 +18,11 @@ class DashboardController extends Controller
         $id = (Auth::id());
         // Lo pasamos a str
         $ids = strval($id);
-        $ids = "_" . $ids . "_";
-        $output = shell_exec("docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemPerc}}\t{{.MemUsage}}\t{{.NetIO}}' $(docker ps --format '{{.ID}} {{.Names}}' | grep '$ids' | awk '{print $1}')");
+
+        $stack = Stack::where('user_id', $id)->first();
+        $appname = $stack->stack_name;
+
+        $output = shell_exec("docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemPerc}}\t{{.MemUsage}}\t{{.NetIO}}' $(docker ps --format '{{.ID}} {{.Names}}' | grep '$appname' | awk '{print $1}')");
         $rows = explode("\n", trim($output));
 
         // Verifica si el número de elementos en el array es diferente de 5.
@@ -81,9 +83,20 @@ class DashboardController extends Controller
         $id = Auth::id();
         $stack = Stack::where('user_id', $id)->first();
         $appname = $stack->stack_name;
+        $domain = $stack->domain;
+        $phpmyadmin = 'phpmyadmin_'.$domain;
+        $dbuser = $stack->mysql_user;
+        $db = $stack->mysql_database;
+
+
         return view('dashboard.info', [
             'username' => $username,
             'appname' => $appname,
+            'domain' => $domain,
+            'phpmyadmin' => $phpmyadmin,
+            'dbuser' => $dbuser,
+            'db' => $db,
+
         ]);
     }
 
@@ -97,6 +110,7 @@ class DashboardController extends Controller
         $request->validated();
 
         $appname = $request->input('app_name');
+        $domain = $request->input('domain');
         $dbname = 'wordpress';
         $dbuser = $request->input('db_user');
         $dbpass = $request->input('db_pass');
@@ -107,7 +121,6 @@ class DashboardController extends Controller
         // Lo pasamos a str
         $ids = strval($id);
 
-        $idConts = '_' . $ids . '_';
         // Creamos la ruta para almacenar los archivos
         $ruta = '/containers/user_' . $ids . '/';
 
@@ -130,16 +143,16 @@ services:
 
     # PHP service
     wordpress$appname:
-      container_name: Wordpress$idConts
+      container_name: Wordpress_$appname
       image: wordpress:latest
       deploy:
         resources:
           limits:
-            cpus: '0.01'
-            memory: '200M'
+            cpus: '0.50'
+            memory: '500M'
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.wordpress$appname.rule=Host(`wordpress$appname.localhost`)'
+        - 'traefik.http.routers.wordpress$appname.rule=Host(`$domain.localhost`)'
         - 'traefik.http.routers.wordpress$appname.entrypoints=web'
         - 'traefik.http.services.wordpress$appname.loadbalancer.server.port=80'
       environment:
@@ -157,13 +170,13 @@ services:
 
     # MySQL database service
     db$appname:
-      container_name: Mysql$idConts
+      container_name: Mysql_$appname
       image: mysql:latest
       deploy:
         resources:
           limits:
-            cpus: '0.10'
-            memory: '800M'
+            cpus: '0.50'
+            memory: '1000M'
       labels:
         - 'traefik.enable=true'
         - 'traefik.tcp.routers.db$appname.rule=HostSNI(`*`)'
@@ -181,16 +194,16 @@ services:
         AnonByte:
 
     phpmyadmin$appname:
-      container_name: PhpMyAdmin$idConts
+      container_name: PhpMyAdmin_$appname
       image: phpmyadmin/phpmyadmin
       deploy:
         resources:
           limits:
-            cpus: '0.01'
-            memory: '200M'
+            cpus: '0.50'
+            memory: '500M'
       labels:
         - 'traefik.enable=true'
-        - 'traefik.http.routers.phpmyadmin$appname.rule=Host(`pma$appname.localhost`)'
+        - 'traefik.http.routers.phpmyadmin$appname.rule=Host(`phpmyadmin_$domain.localhost`)'
         - 'traefik.http.routers.phpmyadmin$appname.entrypoints=web'
         - 'traefik.http.services.phpmyadmin$appname.loadbalancer.server.port=80'
       environment:
@@ -205,10 +218,6 @@ networks:
   AnonByte:
     external: true
 ";
-
-        /*
-          Diferenciar domini de nom de app.
-         */
 
         // Almacenamos el docker-compose
         Storage::put("$ruta$nombreArchivo", $dockerCompose);
@@ -225,6 +234,7 @@ networks:
         Stack::create([
             'user_id' => $id,
             'stack_name' => $appname,
+            'domain' => $domain.'.localhost',
             'mysql_database' => $dbname,
             'mysql_user' => $dbuser,
             'mysql_password' => $dbpass,
@@ -234,7 +244,7 @@ networks:
             'deleted_At' => null,
         ]);
 
-        return redirect()->route('dashboard-home');
+        return redirect()->route('dashboard-info');
     }
 
     // FUNCIONES PRIVADAS

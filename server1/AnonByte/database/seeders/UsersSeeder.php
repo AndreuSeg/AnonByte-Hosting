@@ -17,6 +17,6 @@ class UsersSeeder extends Seeder
     {
         User::factory(10)->create();
         User::factory(10)->stackCreated()->create();
-        User::factory(10)->unverified()->create();
+        // User::factory(10)->unverified()->create();
     }
 }

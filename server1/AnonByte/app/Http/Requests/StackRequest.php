@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StackRequest extends FormRequest
 {
@@ -25,6 +26,12 @@ class StackRequest extends FormRequest
     {
         return [
             'app_name' => 'required|unique:stacks,stack_name',
+            'domain' => [
+                'required',
+                'unique:stacks,domain',
+                'regex:/^[a-z0-9]+$/i', // Solo permitir números y letras minúsculas
+                'not_regex:/[A-Z]/', // Excluir mayusculas
+            ],
             'db_user' => 'required',
             'db_pass' => 'required|min:8',
             'db_root_pass' => 'required|min:8',

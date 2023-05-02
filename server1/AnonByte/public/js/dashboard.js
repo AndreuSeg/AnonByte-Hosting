@@ -17,9 +17,4 @@ $(document).ready(function () {
 
     // Establecer un temporizador para realizar una solicitud AJAX cada 10 segundos
     var intervalId = setInterval(makeRequest, 10000);
-
-    // Agregar un controlador de eventos al botón de actualización
-    $('#regargarStats').click(function () {
-        makeRequest();
-    });
 });

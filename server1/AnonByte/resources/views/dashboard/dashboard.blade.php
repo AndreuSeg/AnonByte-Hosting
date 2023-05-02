@@ -26,13 +26,13 @@
                 <form class="ml-8 gap-3" action="{{ route('auth.logout') }}" method="post">
                     @csrf
                     <i class="bi bi-box-arrow-right"></i>
-                    <button>Log Out<br><span class="text-blue-500">{{ $username }}</span></button>
+                    <button>Log out <span class="text-blue-500">{{ $username }}</span></button>
                 </form>
             </div>
         </aside>
         <main>
             <h1 class="text-3xl font-extrabold pt-8 pl-8">Dashboard</h1>
-            <div class="dashboard gap-4 mt-20 ml-20">
+            <div class="dashboard gap-4 mt-40 ml-20">
                 <div class="stats">
                     {!! $stats !!}
                 </div>

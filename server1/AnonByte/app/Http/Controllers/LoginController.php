@@ -23,14 +23,14 @@ class LoginController extends Controller
         // Con el metodo attempt nos logeamos, y con el segundo parametro boleano comprovamos si se queda recordada la sesion o no
         if (Auth::attempt($input, $remember) && (Auth::user()->role_id == 1)) {
             // Verificamos si el usuario esta verificado
-            if (Auth::user()->email_verified_at == null) {
-                return abort(403);
-            }
+            // if (Auth::user()->email_verified_at == null) {
+            //     return abort(403);
+            // }
 
             if (Auth::user()->stack_created == false) {
                 return redirect()->route('view-stack');
             }
-            return redirect()->route('dashboard-home');
+            return redirect()->route('dashboard-dashboard');
         } elseif (Auth::attempt($input, $remember) && (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)) {
             return redirect()->route('auth.login-admin');
         } else {

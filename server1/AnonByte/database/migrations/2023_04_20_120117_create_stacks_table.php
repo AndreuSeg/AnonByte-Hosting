@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->string('stack_name')->unique();
+            $table->string('domain')->unique();
             $table->string('mysql_database');
             $table->string('mysql_user');
             $table->string('mysql_password');

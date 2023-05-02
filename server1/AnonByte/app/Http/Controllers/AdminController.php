@@ -30,9 +30,9 @@ class AdminController extends Controller
         $input = $request->only('email', 'password');
         if (Auth::attempt($input) && (Auth::user()->role_id == 2 || Auth::user()->role_id == 3)) {
             // Verificamos si el usuario esta verificado
-            if (Auth::user()->email_verified_at == null) {
-                return abort(403);
-            }
+            // if (Auth::user()->email_verified_at == null) {
+            //     return abort(403);
+            // }
 
             return redirect()->route('admin.users.users-table');
         } else {

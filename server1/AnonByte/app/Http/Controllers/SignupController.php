@@ -53,11 +53,11 @@ class SignupController extends Controller
         ]);
 
         // Recuperamos el id del usuario creado previamente
-        $id = User::select('id')->where('email', $email)->get();
-        $id = $id[0];
+        // $id = User::select('id')->where('email', $email)->get();
+        // $id = $id[0];
 
-        // Enviamos un email para verificar
-        Mail::to($email)->send(new VerifyMail($id));
+        // // Enviamos un email para verificar
+        // Mail::to($email)->send(new VerifyMail($id));
 
         return redirect()->route('auth.login');
     }

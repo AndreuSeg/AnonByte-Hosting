@@ -33,8 +33,3 @@ function password2() {
         eye2.style.display = 'none'
     }
 }
-
-// footer
-const year = document.querySelector("#current-year")
-
-year.innerHTML = new Date().getFullYear()

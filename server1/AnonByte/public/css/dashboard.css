@@ -145,13 +145,6 @@ aside form:hover {
     grid-template-rows: min-content;
 }
 
-.dashboard .info-containers {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    height: 50px;
-}
-
 .dashboard .stats {
     display: flex;
     flex-direction: column;
@@ -161,9 +154,10 @@ aside form:hover {
 
 .dashboard .stats table {
     width: 100%;
+    font-size: larger;
     border-style: solid;
     border-color: rgb(100 116 139);
-    border-width: 2px;
+    border-width: 3px;
     table-layout: auto;
     border-spacing: 1.25rem 1.25rem;
     border-collapse: collapse;
@@ -190,17 +184,12 @@ aside form:hover {
     text-align: center;
 }
 
-.dashboard .other_staff {
-    display: grid;
-    width: 100%;
-    grid-template-columns: repeat(2, 1fr);
+.dashboard .info {
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 }
 
-.dashboard .other_staff .cont {
-    width: 100%;
-    height: 300px;
-    background-color: bisque;
-    padding: 2rem;
+.dashboard .info .important {
+    font-weight: 700;
 }
 
 /* End dashboard */

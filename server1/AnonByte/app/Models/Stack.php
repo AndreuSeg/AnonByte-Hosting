@@ -12,6 +12,7 @@ class Stack extends Model
     protected $fillable = [
         'user_id',
         'stack_name',
+        'domain',
         'mysql_database',
         'mysql_user',
         'mysql_password',
